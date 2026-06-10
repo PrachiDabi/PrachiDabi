@@ -1,0 +1,698 @@
+*, *::before, *::after {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+:root {
+    --Black: #000000;
+    --White: #ffffff;
+    --Teal: #14b8a6;
+    --TealBright: #00f2ea;
+    --TealDark: #0d9488;
+    --Green: #22c55e;
+    --NavHeight: 72px;
+}
+
+html, body {
+    height: 100%;
+    overflow-x: hidden;
+}
+
+body {
+    font-family: 'Inter', system-ui, sans-serif;
+    background: var(--Black);
+    color: var(--White);
+    min-height: 100vh;
+}
+
+.PageWrapper {
+    position: relative;
+    min-height: 100vh;
+    overflow: hidden;
+}
+
+.PageWrapper::before {
+    content: '';
+    position: absolute;
+    top: -20%;
+    right: 10%;
+    width: 70vw;
+    height: 60vw;
+    background: radial-gradient(circle, rgba(20, 184, 166, 0.18) 0%, rgba(0, 242, 234, 0.06) 40%, transparent 70%);
+    pointer-events: none;
+    z-index: 0;
+}
+
+
+/* Navigation */
+.NavBar {
+    position: relative;
+    z-index: 10;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 1.25rem 3rem;
+    height: var(--NavHeight);
+}
+
+.NavLogo {
+    font-size: 1.35rem;
+    font-weight: 700;
+    color: var(--Teal);
+    letter-spacing: -0.02em;
+    text-decoration: none;
+}
+
+.NavRight {
+    display: flex;
+    align-items: center;
+    gap: 1.5rem;
+}
+
+.NavTagline {
+    font-size: 0.8rem;
+    font-weight: 500;
+    color: rgba(255, 255, 255, 0.75);
+    letter-spacing: 0.02em;
+}
+
+.StatusPill {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.45rem 1rem;
+    border-radius: 999px;
+    background: rgba(255, 255, 255, 0.06);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    font-size: 0.75rem;
+    font-weight: 500;
+    color: var(--White);
+    white-space: nowrap;
+}
+
+.StatusDot {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: var(--Green);
+    box-shadow: 0 0 8px var(--Green);
+    animation: Pulse 2s ease-in-out infinite;
+}
+
+@keyframes Pulse {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0.6; }
+}
+
+/* Hero */
+.HeroSection {
+    position: relative;
+    z-index: 5;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    align-items: center;
+    min-height: calc(100vh - var(--NavHeight));
+    padding: 0 3rem 4rem;
+    gap: 2rem;
+}
+
+.HeroImageWrapper {
+    position: relative;
+    display: flex;
+    justify-content: center;
+    align-items: flex-end;
+    height: 100%;
+    min-height: 520px;
+}
+
+
+.HeroImage {
+    position: relative;
+    z-index: 1;
+    max-height: 85vh;
+    width: auto;
+    max-width: 100%;
+    object-fit: contain;
+    object-position: bottom center;
+    filter: grayscale(100%) contrast(1.2);
+    mix-blend-mode: lighten;
+    -webkit-mask-image: linear-gradient(to bottom, black 80%, transparent 100%);
+    mask-image: linear-gradient(to bottom, black 11%, transparent 100%);
+}
+
+.HeroContent {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    gap: 1.5rem;
+    padding: 2rem 0;
+}
+
+.HeroEyebrow {
+    font-size: 0.75rem;
+    font-weight: 600;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--Teal);
+}
+
+.HeroHeadline {
+    font-size: clamp(1.75rem, 3.8vw, 2.85rem);
+    font-weight: 800;
+    line-height: 1.12;
+    letter-spacing: -0.03em;
+    color: var(--White);
+}
+
+.HeroDescription {
+    font-size: 1rem;
+    font-weight: 400;
+    line-height: 1.65;
+    color: rgba(255, 255, 255, 0.75);
+    max-width: 540px;
+}
+
+.HeroStats {
+    display: flex;
+    gap: 2.5rem;
+    margin-top: 0.25rem;
+}
+
+.HeroStat {
+    display: flex;
+    flex-direction: column;
+    gap: 0.2rem;
+}
+
+.HeroStatValue {
+    font-size: 1.75rem;
+    font-weight: 800;
+    color: var(--Teal);
+    letter-spacing: -0.02em;
+    line-height: 1;
+}
+
+.HeroStatLabel {
+    font-size: 0.8rem;
+    font-weight: 500;
+    color: rgba(255, 255, 255, 0.6);
+    letter-spacing: 0.01em;
+}
+
+.HeroTags {
+    font-size: 0.75rem;
+    font-weight: 600;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: rgba(255, 255, 255, 0.45);
+}
+
+/* Bottom badge */
+.DeveloperBadge {
+    position: fixed;
+    bottom: 2rem;
+    left: 2.5rem;
+    width: 110px;
+    height: 110px;
+    z-index: 20;
+}
+
+.DeveloperBadge svg {
+    width: 100%;
+    height: 100%;
+}
+
+.DeveloperBadgeCircle {
+    fill: none;
+    stroke: var(--Teal);
+    stroke-width: 1;
+}
+
+.DeveloperBadgeBg {
+    fill: rgba(20, 184, 166, 0.12);
+}
+
+.DeveloperBadgeCenter {
+    fill: var(--TealDark);
+}
+
+.DeveloperBadgeLetter {
+    fill: var(--White);
+    font-size: 18px;
+    font-weight: 800;
+    font-family: 'Inter', sans-serif;
+}
+
+.DeveloperBadgeRing {
+    transform-origin: 55px 55px;
+    animation: BadgeRotate 14s linear infinite;
+}
+
+@keyframes BadgeRotate {
+    from { transform: rotate(0deg); }
+    to { transform: rotate(360deg); }
+}
+
+/* Expertise orbit */
+.ExpertiseSection {
+    position: relative;
+    min-height: 140vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+}
+
+.ExpertiseSection::before {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: min(110vw, 1300px);
+    height: min(110vw, 1300px);
+    background: radial-gradient(circle, rgba(20, 184, 166, 0.28) 0%, rgba(0, 242, 234, 0.1) 25%, transparent 62%);
+    pointer-events: none;
+    z-index: 0;
+}
+
+.ExpertiseSection::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background:
+        linear-gradient(to bottom, var(--Black) 0%, transparent 22%),
+        linear-gradient(to top, var(--Black) 0%, transparent 18%);
+    pointer-events: none;
+    z-index: 1;
+}
+
+.ExpertiseScene {
+    --OrbitInner: 300px;
+    --OrbitOuter: 560px;
+    position: relative;
+    z-index: 2;
+    width: min(98vw, 1320px);
+    height: min(92vh, 920px);
+    min-height: 720px;
+    opacity: 0;
+    transform: scale(0.96);
+    transition: opacity 1s ease, transform 1s ease;
+}
+
+.ExpertiseScene.IsVisible {
+    opacity: 1;
+    transform: scale(1);
+}
+
+.OrbitGuides {
+    position: absolute;
+    inset: 0;
+    z-index: 0;
+}
+
+.OrbitGuide {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    border-radius: 50%;
+    transform: translate(-50%, -50%);
+}
+
+.OrbitGuide--Inner {
+    width: calc(var(--OrbitInner) * 2);
+    height: calc(var(--OrbitInner) * 2);
+    border-style: dashed;
+    border-color: rgba(255, 255, 255, 0.06);
+}
+
+.OrbitGuide--Outer {
+    width: calc(var(--OrbitOuter) * 2);
+    height: calc(var(--OrbitOuter) * 2);
+    border-color: rgba(255, 255, 255, 0.1);
+}
+
+.OrbitPill--Inner { --Radius: var(--OrbitInner); }
+.OrbitPill--Outer { --Radius: var(--OrbitOuter); }
+
+.OrbitPills {
+    position: absolute;
+    inset: 0;
+    z-index: 4;
+}
+
+.OrbitPill {
+    --Angle: 0;
+    --Radius: 300px;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.55rem;
+    padding: 0.55rem 1.1rem;
+    border-radius: 999px;
+    background: rgba(15, 23, 42, 0.5);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    font-size: 0.82rem;
+    font-weight: 600;
+    color: var(--White);
+    white-space: nowrap;
+    backdrop-filter: blur(12px);
+    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.3);
+    transform:
+        rotate(calc(var(--Angle) * 1deg))
+        translateY(calc(-1 * var(--Radius)))
+        rotate(calc(-1 * var(--Angle) * 1deg));
+    transition: background 0.35s ease, border-color 0.35s ease, box-shadow 0.35s ease;
+}
+
+.OrbitPill.IsLit {
+    background: rgba(15, 23, 42, 0.28);
+    border-color: rgba(20, 184, 166, 0.55);
+    box-shadow:
+        0 0 28px rgba(0, 242, 234, 0.35),
+        0 0 50px rgba(20, 184, 166, 0.15),
+        inset 0 0 24px rgba(20, 184, 166, 0.12);
+}
+
+.OrbitPillIcon {
+    width: 18px;
+    height: 18px;
+    object-fit: contain;
+    flex-shrink: 0;
+    filter: brightness(0) saturate(100%) invert(72%) sepia(47%) saturate(605%) hue-rotate(122deg) brightness(93%) contrast(91%);
+}
+
+.OrbitCenter {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    z-index: 2;
+    text-align: center;
+    max-width: 520px;
+    padding: 3rem 2rem;
+    pointer-events: none;
+}
+
+.OrbitCenter::before {
+    content: '';
+    position: absolute;
+    inset: -40%;
+    background: radial-gradient(circle, rgba(20, 184, 166, 0.2) 0%, transparent 65%);
+    z-index: -1;
+    pointer-events: none;
+}
+
+.OrbitTitle {
+    font-size: clamp(2rem, 5.5vw, 3.75rem);
+    font-weight: 800;
+    line-height: 1.08;
+    letter-spacing: -0.03em;
+    text-transform: uppercase;
+    color: var(--White);
+    margin-bottom: 1.5rem;
+    text-shadow: 0 0 40px rgba(20, 184, 166, 0.15);
+}
+
+.OrbitSubtitle {
+    font-size: 0.9rem;
+    font-weight: 400;
+    line-height: 1.65;
+    color: rgba(255, 255, 255, 0.55);
+    max-width: 420px;
+    margin: 0 auto;
+}
+
+.OrbitGlobeRing {
+    --Radius: var(--OrbitOuter);
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: calc(var(--Radius) * 2);
+    height: calc(var(--Radius) * 2);
+    margin-top: calc(-1 * var(--Radius));
+    margin-left: calc(-1 * var(--Radius));
+    z-index: 3;
+    animation: GlobeOrbit 22s linear infinite;
+    animation-play-state: paused;
+}
+
+.ExpertiseScene.IsVisible .OrbitGlobeRing {
+    animation-play-state: running;
+}
+
+.OrbitGlobe {
+    position: absolute;
+    top: 0;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 48px;
+    height: 48px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--White);
+    background: radial-gradient(circle at 35% 35%, var(--TealBright) 0%, var(--Teal) 45%, var(--TealDark) 100%);
+    box-shadow:
+        0 0 20px rgba(0, 242, 234, 0.8),
+        0 0 45px rgba(20, 184, 166, 0.5),
+        0 0 80px rgba(20, 184, 166, 0.25);
+}
+
+.OrbitGlobe svg {
+    width: 22px;
+    height: 22px;
+    opacity: 0.9;
+}
+
+@keyframes GlobeOrbit {
+    from { transform: rotate(0deg); }
+    to { transform: rotate(360deg); }
+}
+
+/* Skills section */
+.SkillsSection {
+    position: relative;
+    margin-top: -100px;
+    padding: calc(5rem + 100px) 2rem 6rem;
+}
+
+.SkillsSection::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 180px;
+    background: linear-gradient(to bottom, transparent 0%, var(--Black) 100%);
+    pointer-events: none;
+    z-index: 0;
+}
+
+.SkillsContainer {
+    position: relative;
+    z-index: 1;
+    max-width: 1100px;
+    margin: 0 auto;
+}
+
+.SkillsGrid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1.5rem;
+    margin-bottom: 4rem;
+}
+
+.SkillsCard {
+    padding: 1.75rem;
+    border-radius: 16px;
+    background: rgba(255, 255, 255, 0.03);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.SkillsCardTitle {
+    font-size: 0.75rem;
+    font-weight: 700;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--Teal);
+    margin-bottom: 1.25rem;
+    padding-bottom: 0.75rem;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.SkillsList {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 0.85rem;
+}
+
+.SkillsList li {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    gap: 1rem;
+    font-size: 0.88rem;
+    font-weight: 500;
+    color: rgba(255, 255, 255, 0.88);
+}
+
+.SkillsYears {
+    font-size: 0.75rem;
+    font-weight: 600;
+    color: rgba(255, 255, 255, 0.4);
+    white-space: nowrap;
+}
+
+.TechTagsBlock {
+    padding-top: 1rem;
+}
+
+.TechTagsTitle {
+    font-size: clamp(1.25rem, 2.5vw, 1.75rem);
+    font-weight: 800;
+    letter-spacing: -0.02em;
+    color: var(--White);
+    margin-bottom: 2rem;
+    text-align: center;
+}
+
+.TechTagsGrid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 2rem;
+}
+
+.TechTagsGroupTitle {
+    font-size: 0.7rem;
+    font-weight: 700;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: rgba(255, 255, 255, 0.45);
+    margin-bottom: 0.85rem;
+}
+
+.TechTags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+}
+
+.TechTag {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.35rem;
+    padding: 0.4rem 0.85rem;
+    border-radius: 999px;
+    background: rgba(15, 23, 42, 0.8);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    font-size: 0.78rem;
+    font-weight: 600;
+    color: var(--White);
+}
+
+.TechTag em {
+    font-style: normal;
+    font-size: 0.68rem;
+    font-weight: 700;
+    color: var(--Teal);
+}
+
+/* Responsive */
+@media (max-width: 1024px) {
+    .HeroSection {
+        grid-template-columns: 1fr;
+        padding: 0 2rem 3rem;
+        text-align: center;
+    }
+
+    .HeroImageWrapper {
+        min-height: 360px;
+        order: -1;
+    }
+
+    .HeroContent {
+        align-items: center;
+    }
+
+    .HeroDescription {
+        max-width: 100%;
+    }
+
+    .HeroStats {
+        justify-content: center;
+    }
+
+    .NavTagline {
+        display: none;
+    }
+
+    .DeveloperBadge {
+        width: 80px;
+        height: 80px;
+        bottom: 1.5rem;
+        left: 1.5rem;
+    }
+
+    .ExpertiseScene {
+        --OrbitInner: 185px;
+        --OrbitOuter: 340px;
+        width: min(98vw, 720px);
+        height: min(85vh, 720px);
+        min-height: 600px;
+    }
+
+    .OrbitPill {
+        font-size: 0.72rem;
+        padding: 0.45rem 0.85rem;
+    }
+
+    .SkillsGrid {
+        grid-template-columns: 1fr;
+    }
+
+    .TechTagsGrid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+@media (max-width: 640px) {
+    .NavBar {
+        padding: 1rem 1.25rem;
+    }
+
+    .StatusPill span:last-child {
+        display: none;
+    }
+
+    .HeroSection {
+        padding: 0 1.25rem 2rem;
+    }
+
+    .HeroStats {
+        gap: 1.5rem;
+    }
+
+    .DeveloperBadge {
+        display: none;
+    }
+
+    .ExpertiseSection {
+        display: none;
+    }
+
+    .SkillsSection {
+        margin-top: 0;
+        padding: 3rem 1.25rem 4rem;
+    }
+
+    .TechTagsGrid {
+        grid-template-columns: 1fr;
+    }
+}
