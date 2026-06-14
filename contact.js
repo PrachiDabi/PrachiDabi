@@ -3,7 +3,7 @@
     const ContactForm = document.getElementById('ContactForm');
     const ContactFormStatus = document.getElementById('ContactFormStatus');
     const ReducedMotionQuery = window.matchMedia('(prefers-reduced-motion: reduce)');
-    const ContactEmail = 'prachidabi96@gmail.com';
+    const FormspreeEndpoint = 'https://formspree.io/f/mjgdjpgo';
 
     function InitContactReveal() {
         if (!ContactSection) return;
@@ -44,58 +44,53 @@
         if (!ContactForm) return;
 
         const SubmitButton = ContactForm.querySelector('.ContactSubmitButton');
-        const HoneyField = ContactForm.querySelector('.ContactHoney');
+        const HoneyField = ContactForm.querySelector('[name="_gotcha"]');
 
         if (HoneyField?.value) return;
 
-        const FormData = new FormData(ContactForm);
-        const Name = FormData.get('Name')?.toString().trim();
-        const Email = FormData.get('Email')?.toString().trim();
-        const Message = FormData.get('Message')?.toString().trim();
+        const FormPayload = new FormData(ContactForm);
+        const Name = FormPayload.get('name')?.toString().trim();
+        const Email = FormPayload.get('email')?.toString().trim();
+        const Message = FormPayload.get('message')?.toString().trim();
 
         if (!Name || !Email || !Message) {
             SetFormStatus('Please fill in all fields.', 'Error');
             return;
         }
 
+        FormPayload.set('_subject', `Portfolio message from ${Name}`);
+        FormPayload.set('_replyto', Email);
+
         SubmitButton?.classList.add('IsLoading');
         SubmitButton?.setAttribute('disabled', 'true');
         SetFormStatus('Sending your message...', 'Pending');
 
         try {
-            const Response = await fetch(`https://formsubmit.co/ajax/${ContactEmail}`, {
+            const Response = await fetch(FormspreeEndpoint, {
                 method: 'POST',
+                body: FormPayload,
                 headers: {
-                    'Content-Type': 'application/json',
                     Accept: 'application/json'
-                },
-                body: JSON.stringify({
-                    name: Name,
-                    email: Email,
-                    message: Message,
-                    _subject: `Portfolio message from ${Name}`,
-                    _template: 'table'
-                })
+                }
             });
 
+            const Result = await Response.json().catch(() => null);
+
             if (!Response.ok) {
-                throw new Error('Request failed');
+                const ErrorMessage = Result?.error || Result?.errors?.[0]?.message;
+                throw new Error(ErrorMessage || 'Request failed');
             }
 
             ContactForm.reset();
             SetFormStatus('Message sent! I will get back to you soon.', 'Success');
-        } catch {
-            SetFormStatus('Something went wrong. Please email me directly.', 'Error');
+        } catch (Error) {
+            const Message = Error instanceof Error && Error.message !== 'Request failed'
+                ? Error.message
+                : 'Something went wrong. Please email me directly.';
+            SetFormStatus(Message, 'Error');
         } finally {
             SubmitButton?.classList.remove('IsLoading');
             SubmitButton?.removeAttribute('disabled');
-        }
-    }
-
-    function CheckSentQuery() {
-        const Params = new URLSearchParams(window.location.search);
-        if (Params.get('sent') === 'true') {
-            SetFormStatus('Message sent! I will get back to you soon.', 'Success');
         }
     }
 
@@ -104,5 +99,4 @@
     }
 
     InitContactReveal();
-    CheckSentQuery();
 })();

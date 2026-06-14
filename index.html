@@ -663,22 +663,22 @@
                     </a>
                 </div>
 
-                <form class="ContactForm" id="ContactForm" novalidate>
+                <form class="ContactForm" id="ContactForm" action="https://formspree.io/f/mjgdjpgo" method="POST" novalidate>
                     <div class="ContactFormRow">
                         <label class="ContactField">
                             <span class="ContactFieldLabel">Name</span>
-                            <input type="text" name="Name" class="ContactInput" placeholder="Your name" required autocomplete="name">
+                            <input type="text" name="name" class="ContactInput" placeholder="Your name" required autocomplete="name">
                         </label>
                         <label class="ContactField">
                             <span class="ContactFieldLabel">Email</span>
-                            <input type="email" name="Email" class="ContactInput" placeholder="you@email.com" required autocomplete="email">
+                            <input type="email" name="email" class="ContactInput" placeholder="you@email.com" required autocomplete="email">
                         </label>
                     </div>
                     <label class="ContactField">
                         <span class="ContactFieldLabel">Message</span>
-                        <textarea name="Message" class="ContactInput ContactTextarea" placeholder="Tell me about your project or idea..." rows="4" required></textarea>
+                        <textarea name="message" class="ContactInput ContactTextarea" placeholder="Tell me about your project or idea..." rows="4" required></textarea>
                     </label>
-                    <input type="text" name="_honey" class="ContactHoney" tabindex="-1" autocomplete="off" aria-hidden="true">
+                    <input type="text" name="_gotcha" class="ContactHoney" tabindex="-1" autocomplete="off" aria-hidden="true">
                     <button type="submit" class="ContactSubmitButton">
                         <span class="ContactSubmitText">Send Message</span>
                         <span class="ContactSubmitLoader" aria-hidden="true"></span>
