@@ -48,12 +48,12 @@
 
         if (HoneyField?.value) return;
 
-        const FormPayload = new FormData(ContactForm);
+        const FormPayload = new window.FormData(ContactForm);
         const Name = FormPayload.get('name')?.toString().trim();
         const Email = FormPayload.get('email')?.toString().trim();
-        const Message = FormPayload.get('message')?.toString().trim();
+        const UserMessage = FormPayload.get('message')?.toString().trim();
 
-        if (!Name || !Email || !Message) {
+        if (!Name || !Email || !UserMessage) {
             SetFormStatus('Please fill in all fields.', 'Error');
             return;
         }
@@ -83,11 +83,11 @@
 
             ContactForm.reset();
             SetFormStatus('Message sent! I will get back to you soon.', 'Success');
-        } catch (Error) {
-            const Message = Error instanceof Error && Error.message !== 'Request failed'
-                ? Error.message
+        } catch (SubmitError) {
+            const StatusMessage = SubmitError instanceof Error && SubmitError.message !== 'Request failed'
+                ? SubmitError.message
                 : 'Something went wrong. Please email me directly.';
-            SetFormStatus(Message, 'Error');
+            SetFormStatus(StatusMessage, 'Error');
         } finally {
             SubmitButton?.classList.remove('IsLoading');
             SubmitButton?.removeAttribute('disabled');
