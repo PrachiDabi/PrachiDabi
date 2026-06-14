@@ -26,6 +26,153 @@ body {
     min-height: 100vh;
 }
 
+body.HasCustomCursor,
+body.HasCustomCursor * {
+    cursor: none !important;
+}
+
+body.HasCustomCursor::after {
+    content: '';
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: min(90vw, 900px);
+    height: min(90vw, 900px);
+    transform: translate(
+        calc(var(--CursorAmbientX, 50vw) - 50%),
+        calc(var(--CursorAmbientY, 50vh) - 50%)
+    );
+    background: radial-gradient(
+        circle,
+        rgba(20, 184, 166, 0.14) 0%,
+        rgba(0, 242, 234, 0.05) 35%,
+        transparent 68%
+    );
+    pointer-events: none;
+    z-index: 0;
+    transition: opacity 0.4s ease;
+}
+
+.CursorLayer {
+    position: fixed;
+    inset: 0;
+    pointer-events: none;
+    z-index: 9999;
+    opacity: 0;
+    transition: opacity 0.35s ease;
+}
+
+.CursorLayer.IsActive {
+    opacity: 1;
+}
+
+.CursorLayer.IsHidden {
+    display: none;
+}
+
+.CursorGlow,
+.CursorRing,
+.CursorDot {
+    position: fixed;
+    top: 0;
+    left: 0;
+    pointer-events: none;
+    will-change: transform;
+}
+
+.CursorGlow {
+    width: 220px;
+    height: 220px;
+    margin: -110px 0 0 -110px;
+    border-radius: 50%;
+    background: radial-gradient(
+        circle,
+        rgba(0, 242, 234, 0.22) 0%,
+        rgba(20, 184, 166, 0.12) 28%,
+        rgba(20, 184, 166, 0.04) 52%,
+        transparent 72%
+    );
+    filter: blur(2px);
+    transition: width 0.35s ease, height 0.35s ease, margin 0.35s ease, opacity 0.35s ease;
+}
+
+.CursorRing {
+    width: 36px;
+    height: 36px;
+    margin: -18px 0 0 -18px;
+    border-radius: 50%;
+    border: 1.5px solid rgba(0, 242, 234, 0.85);
+    box-shadow:
+        0 0 12px rgba(0, 242, 234, 0.55),
+        0 0 28px rgba(20, 184, 166, 0.35),
+        inset 0 0 10px rgba(0, 242, 234, 0.15);
+    transition: width 0.3s ease, height 0.3s ease, margin 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+.CursorDot {
+    width: 6px;
+    height: 6px;
+    margin: -3px 0 0 -3px;
+    border-radius: 50%;
+    background: var(--TealBright);
+    box-shadow:
+        0 0 8px rgba(0, 242, 234, 0.95),
+        0 0 18px rgba(20, 184, 166, 0.65);
+    transition: transform 0.12s ease, width 0.3s ease, height 0.3s ease, margin 0.3s ease;
+}
+
+.CursorLayer.IsHovering .CursorGlow {
+    width: 300px;
+    height: 300px;
+    margin: -150px 0 0 -150px;
+    background: radial-gradient(
+        circle,
+        rgba(0, 242, 234, 0.32) 0%,
+        rgba(20, 184, 166, 0.18) 30%,
+        rgba(20, 184, 166, 0.06) 55%,
+        transparent 75%
+    );
+}
+
+.CursorLayer.IsHovering .CursorRing {
+    width: 52px;
+    height: 52px;
+    margin: -26px 0 0 -26px;
+    border-color: var(--TealBright);
+    box-shadow:
+        0 0 18px rgba(0, 242, 234, 0.75),
+        0 0 42px rgba(20, 184, 166, 0.45),
+        inset 0 0 14px rgba(0, 242, 234, 0.2);
+}
+
+.CursorLayer.IsHovering .CursorDot {
+    width: 4px;
+    height: 4px;
+    margin: -2px 0 0 -2px;
+}
+
+.CursorLayer.IsPressed .CursorRing {
+    width: 28px;
+    height: 28px;
+    margin: -14px 0 0 -14px;
+    border-color: var(--White);
+}
+
+.CursorLayer.IsPressed .CursorGlow {
+    opacity: 0.75;
+}
+
+@media (pointer: coarse), (prefers-reduced-motion: reduce) {
+    body.HasCustomCursor,
+    body.HasCustomCursor * {
+        cursor: auto !important;
+    }
+
+    .CursorLayer {
+        display: none !important;
+    }
+}
+
 .PageWrapper {
     position: relative;
     min-height: 100vh;
@@ -480,6 +627,7 @@ body {
     position: relative;
     margin-top: -100px;
     padding: calc(5rem + 100px) 2rem 6rem;
+    overflow: hidden;
 }
 
 .SkillsSection::before {
@@ -494,6 +642,19 @@ body {
     z-index: 0;
 }
 
+.SkillsSection::after {
+    content: '';
+    position: absolute;
+    top: 35%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: min(95vw, 1000px);
+    height: min(70vw, 700px);
+    background: radial-gradient(circle, rgba(20, 184, 166, 0.12) 0%, rgba(0, 242, 234, 0.04) 40%, transparent 70%);
+    pointer-events: none;
+    z-index: 0;
+}
+
 .SkillsContainer {
     position: relative;
     z-index: 1;
@@ -501,18 +662,120 @@ body {
     margin: 0 auto;
 }
 
+.SkillsHeader {
+    text-align: center;
+    max-width: 640px;
+    margin: 0 auto 3.5rem;
+    transition: opacity 0.7s ease, transform 0.7s ease;
+}
+
+.SkillsSection.HasScrollReveal .SkillsHeader {
+    opacity: 0;
+    transform: translateY(20px);
+}
+
+.SkillsSection.HasScrollReveal.IsVisible .SkillsHeader {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+.SkillsEyebrow {
+    font-size: 0.75rem;
+    font-weight: 600;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--Teal);
+    margin-bottom: 0.85rem;
+}
+
+.SkillsTitle {
+    font-size: clamp(1.85rem, 4vw, 2.75rem);
+    font-weight: 800;
+    letter-spacing: -0.03em;
+    line-height: 1.1;
+    color: var(--White);
+    margin-bottom: 1rem;
+    text-shadow: 0 0 40px rgba(20, 184, 166, 0.12);
+}
+
+.SkillsSubtitle {
+    font-size: 0.95rem;
+    line-height: 1.65;
+    color: rgba(255, 255, 255, 0.55);
+}
+
 .SkillsGrid {
     display: grid;
     grid-template-columns: repeat(3, 1fr);
     gap: 1.5rem;
-    margin-bottom: 4rem;
+    margin-bottom: 3rem;
 }
 
 .SkillsCard {
-    padding: 1.75rem;
-    border-radius: 16px;
-    background: rgba(255, 255, 255, 0.03);
-    border: 1px solid rgba(255, 255, 255, 0.08);
+    position: relative;
+    padding: 1.85rem;
+    border-radius: 20px;
+    background: linear-gradient(145deg, rgba(255, 255, 255, 0.05) 0%, rgba(255, 255, 255, 0.02) 100%);
+    border: 1px solid rgba(255, 255, 255, 0.09);
+    backdrop-filter: blur(14px);
+    box-shadow:
+        0 8px 32px rgba(0, 0, 0, 0.35),
+        inset 0 1px 0 rgba(255, 255, 255, 0.06);
+    overflow: hidden;
+    transition:
+        opacity 0.7s ease,
+        transform 0.7s ease,
+        border-color 0.35s ease,
+        box-shadow 0.35s ease;
+}
+
+.SkillsSection.HasScrollReveal .SkillsCard {
+    opacity: 0;
+    transform: translateY(24px);
+}
+
+.SkillsSection.HasScrollReveal.IsVisible .SkillsCard {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+.SkillsSection.IsVisible .SkillsCard:nth-child(1) { transition-delay: 0.05s; }
+.SkillsSection.IsVisible .SkillsCard:nth-child(2) { transition-delay: 0.15s; }
+.SkillsSection.IsVisible .SkillsCard:nth-child(3) { transition-delay: 0.25s; }
+
+.SkillsCard:hover {
+    border-color: rgba(20, 184, 166, 0.35);
+    box-shadow:
+        0 12px 40px rgba(0, 0, 0, 0.4),
+        0 0 32px rgba(20, 184, 166, 0.1),
+        inset 0 1px 0 rgba(255, 255, 255, 0.08);
+    transform: translateY(-4px);
+}
+
+.SkillsSection.IsVisible .SkillsCard:hover {
+    transform: translateY(-4px);
+}
+
+.SkillsCardAccent {
+    position: absolute;
+    top: 0;
+    left: 1.5rem;
+    right: 1.5rem;
+    height: 2px;
+    background: linear-gradient(90deg, transparent, var(--TealBright), transparent);
+    opacity: 0.7;
+}
+
+.SkillsCard--Core .SkillsCardAccent {
+    background: linear-gradient(90deg, transparent, var(--TealBright) 20%, var(--Teal) 80%, transparent);
+}
+
+.SkillsCard--Advanced .SkillsCardAccent {
+    background: linear-gradient(90deg, transparent, var(--Teal) 30%, var(--TealBright) 70%, transparent);
+}
+
+.SkillsCard--Working .SkillsCardAccent {
+    background: linear-gradient(90deg, transparent, rgba(0, 242, 234, 0.6) 50%, transparent);
 }
 
 .SkillsCardTitle {
@@ -521,8 +784,8 @@ body {
     letter-spacing: 0.14em;
     text-transform: uppercase;
     color: var(--Teal);
-    margin-bottom: 1.25rem;
-    padding-bottom: 0.75rem;
+    margin-bottom: 1.35rem;
+    padding-bottom: 0.85rem;
     border-bottom: 1px solid rgba(255, 255, 255, 0.08);
 }
 
@@ -530,28 +793,123 @@ body {
     list-style: none;
     display: flex;
     flex-direction: column;
-    gap: 0.85rem;
+    gap: 0.35rem;
 }
 
 .SkillsList li {
-    display: flex;
-    justify-content: space-between;
-    align-items: baseline;
-    gap: 1rem;
+    --SkillLevel: 50%;
+    position: relative;
+    display: grid;
+    grid-template-columns: 1fr auto;
+    grid-template-rows: auto auto;
+    column-gap: 1rem;
+    row-gap: 0.45rem;
+    align-items: center;
+    padding: 0.7rem 0.75rem 0.7rem 1rem;
+    border-radius: 10px;
+    transition: background 0.3s ease, padding-left 0.3s ease;
+}
+
+.SkillsList li::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 0.65rem;
+    bottom: 0.65rem;
+    width: 2px;
+    border-radius: 2px;
+    background: linear-gradient(to bottom, var(--TealBright), var(--TealDark));
+    opacity: 0.35;
+    transition: opacity 0.3s ease, box-shadow 0.3s ease;
+}
+
+.SkillsList li:hover {
+    background: rgba(20, 184, 166, 0.06);
+    padding-left: 1.15rem;
+}
+
+.SkillsList li:hover::before {
+    opacity: 1;
+    box-shadow: 0 0 10px rgba(0, 242, 234, 0.45);
+}
+
+.SkillsList li[data-years="6"] { --SkillLevel: 100%; }
+.SkillsList li[data-years="5"] { --SkillLevel: 83%; }
+.SkillsList li[data-years="4"] { --SkillLevel: 67%; }
+.SkillsList li[data-years="3"] { --SkillLevel: 50%; }
+.SkillsList li[data-years="2"] { --SkillLevel: 33%; }
+.SkillsList li[data-years="1"] { --SkillLevel: 17%; }
+
+.SkillsName {
+    grid-column: 1;
+    grid-row: 1;
     font-size: 0.88rem;
     font-weight: 500;
-    color: rgba(255, 255, 255, 0.88);
+    color: rgba(255, 255, 255, 0.92);
 }
 
 .SkillsYears {
-    font-size: 0.75rem;
-    font-weight: 600;
-    color: rgba(255, 255, 255, 0.4);
+    grid-column: 2;
+    grid-row: 1;
+    font-size: 0.72rem;
+    font-weight: 700;
+    letter-spacing: 0.04em;
+    color: var(--Teal);
     white-space: nowrap;
+    padding: 0.2rem 0.55rem;
+    border-radius: 999px;
+    background: rgba(20, 184, 166, 0.1);
+    border: 1px solid rgba(20, 184, 166, 0.2);
+}
+
+.SkillsList li::after {
+    grid-column: 1 / -1;
+    grid-row: 2;
+    content: '';
+    display: block;
+    height: 3px;
+    border-radius: 999px;
+    background: linear-gradient(
+        90deg,
+        rgba(20, 184, 166, 0.75) 0%,
+        rgba(0, 242, 234, 0.45) var(--SkillLevel),
+        rgba(255, 255, 255, 0.05) var(--SkillLevel),
+        rgba(255, 255, 255, 0.05) 100%
+    );
+}
+
+.SkillsDivider {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    margin-bottom: 3.5rem;
+    transition: opacity 0.8s ease 0.3s;
+}
+
+.SkillsSection.HasScrollReveal .SkillsDivider {
+    opacity: 0;
+}
+
+.SkillsSection.HasScrollReveal.IsVisible .SkillsDivider {
+    opacity: 1;
+}
+
+.SkillsDividerLine {
+    flex: 1;
+    height: 1px;
+    background: linear-gradient(90deg, transparent, rgba(20, 184, 166, 0.35), transparent);
+}
+
+.SkillsDividerDot {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: var(--TealBright);
+    box-shadow: 0 0 12px rgba(0, 242, 234, 0.6);
 }
 
 .TechTagsBlock {
-    padding-top: 1rem;
+    padding-top: 0.5rem;
 }
 
 .TechTagsTitle {
@@ -559,14 +917,49 @@ body {
     font-weight: 800;
     letter-spacing: -0.02em;
     color: var(--White);
-    margin-bottom: 2rem;
+    margin-bottom: 2.25rem;
     text-align: center;
 }
 
 .TechTagsGrid {
     display: grid;
     grid-template-columns: repeat(3, 1fr);
-    gap: 2rem;
+    gap: 1.25rem;
+}
+
+.TechTagsGroup {
+    padding: 1.35rem 1.25rem;
+    border-radius: 16px;
+    background: rgba(15, 23, 42, 0.35);
+    border: 1px solid rgba(255, 255, 255, 0.06);
+    transition: border-color 0.35s ease, box-shadow 0.35s ease, transform 0.35s ease, opacity 0.6s ease;
+}
+
+.SkillsSection.HasScrollReveal .TechTagsGroup {
+    opacity: 0;
+    transform: translateY(16px);
+}
+
+.SkillsSection.HasScrollReveal.IsVisible .TechTagsGroup {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+.SkillsSection.IsVisible .TechTagsGroup:nth-child(1) { transition-delay: 0.35s; }
+.SkillsSection.IsVisible .TechTagsGroup:nth-child(2) { transition-delay: 0.42s; }
+.SkillsSection.IsVisible .TechTagsGroup:nth-child(3) { transition-delay: 0.49s; }
+.SkillsSection.IsVisible .TechTagsGroup:nth-child(4) { transition-delay: 0.56s; }
+.SkillsSection.IsVisible .TechTagsGroup:nth-child(5) { transition-delay: 0.63s; }
+.SkillsSection.IsVisible .TechTagsGroup:nth-child(6) { transition-delay: 0.7s; }
+
+.TechTagsGroup:hover {
+    border-color: rgba(20, 184, 166, 0.3);
+    box-shadow: 0 8px 28px rgba(0, 0, 0, 0.25);
+    transform: translateY(-2px);
+}
+
+.SkillsSection.IsVisible .TechTagsGroup:hover {
+    transform: translateY(-2px);
 }
 
 .TechTagsGroupTitle {
@@ -574,8 +967,10 @@ body {
     font-weight: 700;
     letter-spacing: 0.12em;
     text-transform: uppercase;
-    color: rgba(255, 255, 255, 0.45);
-    margin-bottom: 0.85rem;
+    color: rgba(255, 255, 255, 0.55);
+    margin-bottom: 1rem;
+    padding-bottom: 0.65rem;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.06);
 }
 
 .TechTags {
@@ -588,20 +983,1956 @@ body {
     display: inline-flex;
     align-items: center;
     gap: 0.35rem;
-    padding: 0.4rem 0.85rem;
+    padding: 0.42rem 0.9rem;
     border-radius: 999px;
-    background: rgba(15, 23, 42, 0.8);
+    background: rgba(0, 0, 0, 0.35);
     border: 1px solid rgba(255, 255, 255, 0.08);
     font-size: 0.78rem;
     font-weight: 600;
     color: var(--White);
+    transition: background 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease, transform 0.3s ease;
+}
+
+.TechTag:hover {
+    background: rgba(20, 184, 166, 0.12);
+    border-color: rgba(20, 184, 166, 0.4);
+    box-shadow: 0 0 16px rgba(20, 184, 166, 0.15);
+    transform: translateY(-1px);
 }
 
 .TechTag em {
     font-style: normal;
     font-size: 0.68rem;
     font-weight: 700;
+    color: var(--TealBright);
+}
+
+/* Journey section */
+.JourneySection {
+    position: relative;
+    padding: 6rem 2rem 7rem;
+    overflow: hidden;
+    isolation: isolate;
+}
+
+.JourneyBg {
+    position: absolute;
+    inset: 0;
+    z-index: 0;
+    pointer-events: none;
+    overflow: hidden;
+}
+
+.JourneyBgGrid {
+    position: absolute;
+    inset: -50%;
+    background-image:
+        linear-gradient(rgba(20, 184, 166, 0.05) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(20, 184, 166, 0.05) 1px, transparent 1px);
+    background-size: 56px 56px;
+    animation: JourneyGridDrift 28s linear infinite;
+    mask-image: radial-gradient(ellipse 80% 70% at 50% 50%, black 20%, transparent 75%);
+}
+
+@keyframes JourneyGridDrift {
+    from { transform: translate(0, 0) rotate(0deg); }
+    to { transform: translate(56px, 56px) rotate(0.5deg); }
+}
+
+.JourneyBgOrb {
+    position: absolute;
+    border-radius: 50%;
+    filter: blur(40px);
+    opacity: 0.55;
+}
+
+.JourneyBgOrb--One {
+    top: 8%;
+    right: 12%;
+    width: 280px;
+    height: 280px;
+    background: radial-gradient(circle, rgba(0, 242, 234, 0.22) 0%, transparent 70%);
+    animation: JourneyOrbFloatOne 14s ease-in-out infinite;
+}
+
+.JourneyBgOrb--Two {
+    bottom: 18%;
+    left: 5%;
+    width: 360px;
+    height: 360px;
+    background: radial-gradient(circle, rgba(20, 184, 166, 0.18) 0%, transparent 72%);
+    animation: JourneyOrbFloatTwo 18s ease-in-out infinite;
+}
+
+.JourneyBgOrb--Three {
+    top: 42%;
+    left: 38%;
+    width: 220px;
+    height: 220px;
+    background: radial-gradient(circle, rgba(0, 242, 234, 0.1) 0%, transparent 68%);
+    animation: JourneyOrbFloatThree 11s ease-in-out infinite;
+}
+
+@keyframes JourneyOrbFloatOne {
+    0%, 100% { transform: translate(0, 0) scale(1); }
+    50% { transform: translate(-30px, 40px) scale(1.08); }
+}
+
+@keyframes JourneyOrbFloatTwo {
+    0%, 100% { transform: translate(0, 0) scale(1); }
+    50% { transform: translate(45px, -35px) scale(1.12); }
+}
+
+@keyframes JourneyOrbFloatThree {
+    0%, 100% { transform: translate(0, 0); opacity: 0.4; }
+    50% { transform: translate(-20px, 25px); opacity: 0.7; }
+}
+
+.JourneyBgLines {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    opacity: 0.35;
+}
+
+.JourneyBgPath {
+    fill: none;
+    stroke: rgba(0, 242, 234, 0.25);
+    stroke-width: 1;
+    stroke-dasharray: 8 14;
+    animation: JourneyPathFlow 20s linear infinite;
+}
+
+.JourneyBgPath--Alt {
+    stroke: rgba(20, 184, 166, 0.2);
+    animation-duration: 26s;
+    animation-direction: reverse;
+}
+
+@keyframes JourneyPathFlow {
+    from { stroke-dashoffset: 0; }
+    to { stroke-dashoffset: -220; }
+}
+
+.JourneyBgNode {
+    fill: var(--TealBright);
+    opacity: 0.5;
+    animation: JourneyNodePulse 3s ease-in-out infinite;
+}
+
+.JourneyBgNode:nth-child(2) { animation-delay: 0.4s; }
+.JourneyBgNode:nth-child(3) { animation-delay: 0.8s; }
+.JourneyBgNode:nth-child(4) { animation-delay: 1.2s; }
+.JourneyBgNode:nth-child(5) { animation-delay: 0.6s; }
+.JourneyBgNode:nth-child(6) { animation-delay: 1s; }
+.JourneyBgNode:nth-child(7) { animation-delay: 1.4s; }
+
+@keyframes JourneyNodePulse {
+    0%, 100% { opacity: 0.3; r: 2; }
+    50% { opacity: 0.9; }
+}
+
+.JourneyBgScanline {
+    position: absolute;
+    inset: 0;
+    background: repeating-linear-gradient(
+        to bottom,
+        transparent 0,
+        transparent 3px,
+        rgba(0, 242, 234, 0.015) 3px,
+        rgba(0, 242, 234, 0.015) 4px
+    );
+    animation: JourneyScanline 12s linear infinite;
+    opacity: 0.6;
+}
+
+@keyframes JourneyScanline {
+    from { transform: translateY(0); }
+    to { transform: translateY(80px); }
+}
+
+.JourneySection::before {
+    content: '';
+    position: absolute;
+    top: 10%;
+    right: -10%;
+    width: min(70vw, 600px);
+    height: min(70vw, 600px);
+    background: radial-gradient(circle, rgba(20, 184, 166, 0.08) 0%, transparent 68%);
+    pointer-events: none;
+    z-index: 0;
+}
+
+.JourneySection::after {
+    content: '';
+    position: absolute;
+    bottom: 5%;
+    left: -8%;
+    width: min(60vw, 500px);
+    height: min(60vw, 500px);
+    background: radial-gradient(circle, rgba(0, 242, 234, 0.05) 0%, transparent 70%);
+    pointer-events: none;
+    z-index: 0;
+}
+
+.JourneyContainer {
+    position: relative;
+    z-index: 1;
+    max-width: 920px;
+    margin: 0 auto;
+}
+
+.JourneyHeader {
+    text-align: center;
+    max-width: 680px;
+    margin: 0 auto 2.5rem;
+    transition: opacity 0.85s cubic-bezier(0.22, 1, 0.36, 1), transform 0.85s cubic-bezier(0.22, 1, 0.36, 1), filter 0.85s ease;
+}
+
+.JourneySection.HasScrollReveal .JourneyHeader:not(.IsRevealed) {
+    opacity: 0;
+    transform: translateY(32px);
+    filter: blur(6px);
+}
+
+.JourneyHeader.IsRevealed {
+    opacity: 1;
+    transform: translateY(0);
+    filter: blur(0);
+}
+
+.JourneyEyebrow {
+    font-size: 0.75rem;
+    font-weight: 600;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
     color: var(--Teal);
+    margin-bottom: 0.85rem;
+}
+
+.JourneyTitle {
+    font-size: clamp(1.85rem, 4vw, 2.75rem);
+    font-weight: 800;
+    letter-spacing: -0.03em;
+    line-height: 1.1;
+    color: var(--White);
+    margin-bottom: 1rem;
+    text-shadow: 0 0 40px rgba(20, 184, 166, 0.12);
+}
+
+.JourneySubtitle {
+    font-size: 0.95rem;
+    line-height: 1.65;
+    color: rgba(255, 255, 255, 0.55);
+}
+
+.JourneyAwards {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 0.6rem;
+    margin-bottom: 3.5rem;
+    transition: opacity 0.85s cubic-bezier(0.22, 1, 0.36, 1), transform 0.85s cubic-bezier(0.22, 1, 0.36, 1), filter 0.85s ease;
+}
+
+.JourneySection.HasScrollReveal .JourneyAwards:not(.IsRevealed) {
+    opacity: 0;
+    transform: translateY(28px) scale(0.97);
+    filter: blur(4px);
+}
+
+.JourneyAwards.IsRevealed {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+    filter: blur(0);
+}
+
+.JourneyAward {
+    padding: 0.45rem 0.95rem;
+    border-radius: 999px;
+    font-size: 0.72rem;
+    font-weight: 700;
+    letter-spacing: 0.03em;
+    color: rgba(255, 255, 255, 0.85);
+    background: rgba(15, 23, 42, 0.55);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    backdrop-filter: blur(10px);
+    transition: border-color 0.3s ease, box-shadow 0.3s ease, transform 0.3s ease;
+}
+
+.JourneyAward:hover {
+    border-color: rgba(20, 184, 166, 0.4);
+    box-shadow: 0 0 20px rgba(20, 184, 166, 0.12);
+    transform: translateY(-2px);
+}
+
+.JourneyAward--Star {
+    color: var(--TealBright);
+    border-color: rgba(0, 242, 234, 0.35);
+    background: rgba(20, 184, 166, 0.12);
+    box-shadow: 0 0 18px rgba(0, 242, 234, 0.1);
+}
+
+.JourneyTimeline {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    gap: 0;
+    padding-left: 2.5rem;
+}
+
+.JourneyTrack {
+    position: absolute;
+    left: 0.55rem;
+    top: 0;
+    bottom: 0;
+    width: 2px;
+    background: rgba(255, 255, 255, 0.08);
+    border-radius: 2px;
+    overflow: hidden;
+}
+
+.JourneyTrackFill {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 0%;
+    background: linear-gradient(to bottom, var(--TealBright), var(--Teal), var(--TealDark));
+    box-shadow: 0 0 12px rgba(0, 242, 234, 0.5);
+    border-radius: 2px;
+    transition: height 0.15s ease-out;
+}
+
+.JourneyNode {
+    position: relative;
+    display: grid;
+    grid-template-columns: auto 1fr;
+    gap: 1.25rem;
+    padding: 1.35rem 0;
+    transition:
+        opacity 0.9s cubic-bezier(0.22, 1, 0.36, 1),
+        transform 0.9s cubic-bezier(0.22, 1, 0.36, 1),
+        filter 0.9s ease;
+}
+
+.JourneySection.HasScrollReveal .JourneyNode:not(.IsRevealed) {
+    opacity: 0;
+    transform: translateY(48px) translateX(-24px) scale(0.94);
+    filter: blur(8px);
+}
+
+.JourneyNode.IsRevealed {
+    opacity: 1;
+    transform: translateY(0) translateX(0) scale(1);
+    filter: blur(0);
+}
+
+.JourneyNode.IsRevealed .JourneyCard {
+    animation: JourneyCardGlow 1.2s ease 0.15s both;
+}
+
+@keyframes JourneyCardGlow {
+    0% {
+        box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+        border-color: rgba(255, 255, 255, 0.09);
+    }
+    40% {
+        box-shadow:
+            0 12px 40px rgba(0, 0, 0, 0.35),
+            0 0 40px rgba(0, 242, 234, 0.18);
+        border-color: rgba(0, 242, 234, 0.35);
+    }
+    100% {
+        box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+        border-color: rgba(255, 255, 255, 0.09);
+    }
+}
+
+.JourneyNode--Current.IsRevealed .JourneyCard {
+    animation: JourneyCurrentGlow 1.4s ease 0.1s both;
+}
+
+@keyframes JourneyCurrentGlow {
+    0% { box-shadow: 0 8px 32px rgba(0, 0, 0, 0.35); }
+    50% {
+        box-shadow:
+            0 12px 48px rgba(0, 0, 0, 0.4),
+            0 0 52px rgba(0, 242, 234, 0.22);
+    }
+    100% {
+        box-shadow:
+            0 8px 32px rgba(0, 0, 0, 0.35),
+            0 0 36px rgba(20, 184, 166, 0.12),
+            inset 0 1px 0 rgba(0, 242, 234, 0.08);
+    }
+}
+
+.JourneyMarker {
+    position: absolute;
+    left: -2.5rem;
+    top: 2rem;
+    width: 1.15rem;
+    height: 1.15rem;
+    transform: translateX(-50%);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 2;
+}
+
+.JourneyMarkerIcon {
+    font-size: 0.85rem;
+    color: rgba(255, 255, 255, 0.35);
+    transition: color 0.35s ease, text-shadow 0.35s ease, transform 0.35s ease;
+}
+
+.JourneyNode--Corporate .JourneyMarkerIcon {
+    color: var(--Teal);
+}
+
+.JourneyNode--Education .JourneyMarkerIcon {
+    color: rgba(0, 242, 234, 0.5);
+}
+
+.JourneyNode.IsActive .JourneyMarkerIcon,
+.JourneyNode--Current .JourneyMarkerIcon {
+    color: var(--TealBright);
+    text-shadow: 0 0 14px rgba(0, 242, 234, 0.8);
+    transform: scale(1.2);
+}
+
+.JourneyNode--Current .JourneyMarker::before {
+    content: '';
+    position: absolute;
+    inset: -8px;
+    border-radius: 50%;
+    border: 1px solid rgba(0, 242, 234, 0.35);
+    animation: JourneyPulse 2.4s ease-in-out infinite;
+}
+
+@keyframes JourneyPulse {
+    0%, 100% { opacity: 0.4; transform: scale(1); }
+    50% { opacity: 1; transform: scale(1.15); }
+}
+
+.JourneyCard {
+    grid-column: 1 / -1;
+    margin-left: 0.5rem;
+    padding: 1.65rem 1.75rem;
+    border-radius: 18px;
+    background: linear-gradient(145deg, rgba(255, 255, 255, 0.07) 0%, rgba(255, 255, 255, 0.02) 55%, rgba(20, 184, 166, 0.04) 100%);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    backdrop-filter: blur(16px);
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+    transition: border-color 0.35s ease, box-shadow 0.35s ease, transform 0.35s ease;
+    position: relative;
+    overflow: hidden;
+}
+
+.JourneyCard::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 60%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(0, 242, 234, 0.06), transparent);
+    transition: left 0.6s ease;
+    pointer-events: none;
+}
+
+.JourneyNode.IsRevealed .JourneyCard::before {
+    left: 140%;
+    transition: left 1.1s ease 0.2s;
+}
+
+.JourneyCard:hover {
+    border-color: rgba(20, 184, 166, 0.35);
+    box-shadow:
+        0 12px 40px rgba(0, 0, 0, 0.35),
+        0 0 28px rgba(20, 184, 166, 0.08);
+    transform: translateX(6px);
+}
+
+.JourneyNode--Current .JourneyCard {
+    border-color: rgba(0, 242, 234, 0.3);
+    box-shadow:
+        0 8px 32px rgba(0, 0, 0, 0.35),
+        0 0 36px rgba(20, 184, 166, 0.12),
+        inset 0 1px 0 rgba(0, 242, 234, 0.08);
+}
+
+.JourneyCard--Education {
+    background: linear-gradient(145deg, rgba(20, 184, 166, 0.06) 0%, rgba(255, 255, 255, 0.02) 100%);
+    border-color: rgba(20, 184, 166, 0.12);
+}
+
+.JourneyCardTop {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1rem;
+    margin-bottom: 0.65rem;
+}
+
+.JourneyPeriod {
+    font-size: 0.72rem;
+    font-weight: 700;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--Teal);
+}
+
+.JourneyBadge {
+    padding: 0.22rem 0.65rem;
+    border-radius: 999px;
+    font-size: 0.65rem;
+    font-weight: 800;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--Black);
+    background: var(--TealBright);
+    box-shadow: 0 0 14px rgba(0, 242, 234, 0.45);
+}
+
+.JourneyBadge--Academic {
+    color: var(--White);
+    background: rgba(20, 184, 166, 0.25);
+    border: 1px solid rgba(20, 184, 166, 0.4);
+    box-shadow: none;
+}
+
+.JourneyRole {
+    font-size: 1.15rem;
+    font-weight: 800;
+    letter-spacing: -0.02em;
+    color: var(--White);
+    margin-bottom: 0.25rem;
+}
+
+.JourneyOrg {
+    font-size: 0.88rem;
+    font-weight: 600;
+    color: rgba(255, 255, 255, 0.55);
+    margin-bottom: 1rem;
+}
+
+.JourneyHighlights {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 0.55rem;
+    margin-bottom: 1.1rem;
+}
+
+.JourneyHighlights li {
+    position: relative;
+    padding-left: 1rem;
+    font-size: 0.84rem;
+    line-height: 1.55;
+    color: rgba(255, 255, 255, 0.72);
+}
+
+.JourneyHighlights li::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 0.55em;
+    width: 5px;
+    height: 5px;
+    border-radius: 50%;
+    background: var(--Teal);
+    box-shadow: 0 0 6px rgba(0, 242, 234, 0.5);
+}
+
+.JourneyNote {
+    font-size: 0.82rem;
+    line-height: 1.55;
+    color: rgba(255, 255, 255, 0.5);
+    font-style: italic;
+}
+
+.JourneyTags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.45rem;
+}
+
+.JourneyTag {
+    padding: 0.3rem 0.75rem;
+    border-radius: 999px;
+    font-size: 0.68rem;
+    font-weight: 700;
+    letter-spacing: 0.04em;
+    color: rgba(255, 255, 255, 0.8);
+    background: rgba(0, 0, 0, 0.3);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.JourneyPhaseLabel {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    padding: 2rem 0 1.25rem;
+    margin-left: 0.5rem;
+    transition: opacity 0.85s ease, transform 0.85s ease, filter 0.85s ease;
+}
+
+.JourneySection.HasScrollReveal .JourneyPhaseLabel:not(.IsRevealed) {
+    opacity: 0;
+    transform: scale(0.92);
+    filter: blur(4px);
+}
+
+.JourneyPhaseLabel.IsRevealed {
+    opacity: 1;
+    transform: scale(1);
+    filter: blur(0);
+}
+
+.JourneyPhaseLine {
+    flex: 1;
+    height: 1px;
+    background: linear-gradient(90deg, transparent, rgba(20, 184, 166, 0.35), transparent);
+}
+
+.JourneyPhaseText {
+    font-size: 0.68rem;
+    font-weight: 700;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: rgba(255, 255, 255, 0.4);
+    white-space: nowrap;
+}
+
+/* Media gallery sections (Awards & Testimonials) */
+.MediaGallerySection {
+    position: relative;
+    padding: 6rem 0 7rem;
+    overflow: hidden;
+}
+
+.AwardsSection::before,
+.TestimonialsSection::before {
+    content: '';
+    position: absolute;
+    top: 20%;
+    left: 50%;
+    transform: translateX(-50%);
+    width: min(90vw, 900px);
+    height: 320px;
+    background: radial-gradient(ellipse, rgba(20, 184, 166, 0.1) 0%, transparent 70%);
+    pointer-events: none;
+}
+
+.TestimonialsSection::after {
+    content: '';
+    position: absolute;
+    bottom: 8%;
+    right: -5%;
+    width: min(50vw, 420px);
+    height: min(50vw, 420px);
+    background: radial-gradient(circle, rgba(0, 242, 234, 0.06) 0%, transparent 70%);
+    pointer-events: none;
+}
+
+.MediaGalleryContainer {
+    position: relative;
+    z-index: 1;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 2rem;
+}
+
+.MediaGalleryContainer--Hint {
+    margin-top: 1.25rem;
+}
+
+.MediaGalleryHeader {
+    text-align: center;
+    max-width: 680px;
+    margin: 0 auto 3rem;
+    transition: opacity 0.85s cubic-bezier(0.22, 1, 0.36, 1), transform 0.85s cubic-bezier(0.22, 1, 0.36, 1), filter 0.85s ease;
+}
+
+.MediaGallerySection.HasScrollReveal .MediaGalleryHeader:not(.IsRevealed) {
+    opacity: 0;
+    transform: translateY(28px);
+    filter: blur(6px);
+}
+
+.MediaGalleryHeader.IsRevealed {
+    opacity: 1;
+    transform: translateY(0);
+    filter: blur(0);
+}
+
+.MediaGalleryEyebrow {
+    font-size: 0.75rem;
+    font-weight: 600;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--Teal);
+    margin-bottom: 0.85rem;
+}
+
+.MediaGalleryTitle {
+    font-size: clamp(1.85rem, 4vw, 2.75rem);
+    font-weight: 800;
+    letter-spacing: -0.03em;
+    line-height: 1.1;
+    color: var(--White);
+    margin-bottom: 1rem;
+    text-shadow: 0 0 40px rgba(20, 184, 166, 0.12);
+}
+
+.MediaGallerySubtitle {
+    font-size: 0.95rem;
+    line-height: 1.65;
+    color: rgba(255, 255, 255, 0.55);
+}
+
+.MediaScrollWrap {
+    position: relative;
+    width: 100vw;
+    margin-left: calc(50% - 50vw);
+    padding: 2rem 0 2.5rem;
+    overflow: hidden;
+    mask-image: linear-gradient(90deg, transparent 0%, black 5%, black 95%, transparent 100%);
+    transition: opacity 0.85s ease, transform 0.85s ease, filter 0.85s ease;
+}
+
+.MediaGallerySection.HasScrollReveal .MediaScrollWrap:not(.IsRevealed) {
+    opacity: 0;
+    transform: translateY(24px);
+    filter: blur(4px);
+}
+
+.MediaScrollWrap.IsRevealed {
+    opacity: 1;
+    transform: translateY(0);
+    filter: blur(0);
+}
+
+.MediaCarousel {
+    display: flex;
+    width: max-content;
+    will-change: transform;
+}
+
+.MediaCarousel.IsAutoPlaying {
+    animation: MediaMarquee var(--CarouselDuration, 80s) linear infinite;
+}
+
+.MediaCarousel.IsAutoPlaying.IsReverse {
+    animation-name: MediaMarqueeReverse;
+}
+
+.MediaCarousel.IsPaused {
+    animation-play-state: paused;
+}
+
+@keyframes MediaMarquee {
+    from { transform: translateX(0); }
+    to { transform: translateX(-50%); }
+}
+
+@keyframes MediaMarqueeReverse {
+    from { transform: translateX(-50%); }
+    to { transform: translateX(0); }
+}
+
+.MediaTrack {
+    display: flex;
+    flex-shrink: 0;
+    gap: 1.5rem;
+    padding: 0.5rem 1.5rem;
+}
+
+.MediaTrack--Clone {
+    pointer-events: auto;
+}
+
+.MediaGalleryItem {
+    flex: 0 0 auto;
+    width: clamp(220px, 16vw, 300px);
+    border: none;
+    background: none;
+    padding: 0;
+    text-align: left;
+    cursor: pointer;
+    transition: transform 0.35s ease;
+}
+
+.TestimonialsSection .MediaGalleryItem {
+    width: clamp(240px, 18vw, 300px);
+}
+
+/* Testimonials — square message cards */
+.TestimonialsSection {
+    padding: 7rem 0 7.5rem;
+}
+
+.TestimonialsBg {
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    overflow: hidden;
+}
+
+.TestimonialsBgQuote {
+    position: absolute;
+    font-size: clamp(8rem, 18vw, 14rem);
+    font-weight: 800;
+    line-height: 1;
+    color: rgba(20, 184, 166, 0.04);
+    font-family: Georgia, 'Times New Roman', serif;
+    user-select: none;
+}
+
+.TestimonialsBgQuote--Left {
+    top: 12%;
+    left: 4%;
+}
+
+.TestimonialsBgQuote--Right {
+    bottom: 10%;
+    right: 6%;
+}
+
+.TestimonialsBgGrid {
+    position: absolute;
+    inset: 0;
+    background-image: radial-gradient(rgba(20, 184, 166, 0.12) 1px, transparent 1px);
+    background-size: 28px 28px;
+    mask-image: radial-gradient(ellipse 80% 60% at 50% 50%, black 10%, transparent 75%);
+    opacity: 0.35;
+}
+
+.TestimonialsSection .MediaScrollWrap {
+    padding: 3rem 0 3.5rem;
+}
+
+.TestimonialsSection .MediaTrack {
+    align-items: center;
+    gap: 2rem;
+    padding: 1rem 2rem;
+}
+
+.TestimonialsCard {
+    width: clamp(240px, 18vw, 300px);
+    transition: transform 0.45s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.TestimonialsCard:nth-child(even) {
+    transform: translateY(18px);
+}
+
+.TestimonialsCard:nth-child(odd) {
+    transform: translateY(-10px);
+}
+
+.TestimonialsCard:hover,
+.TestimonialsCard.IsHovered,
+.TestimonialsCard:focus-visible {
+    transform: translateY(-6px) scale(1.04);
+    z-index: 3;
+}
+
+.TestimonialsCardFrame {
+    position: relative;
+    aspect-ratio: 1 / 1;
+    width: 100%;
+    border-radius: 22px;
+    padding: 3px;
+    background: linear-gradient(145deg, rgba(0, 242, 234, 0.55), rgba(20, 184, 166, 0.15) 45%, rgba(255, 255, 255, 0.08));
+    box-shadow:
+        0 10px 40px rgba(0, 0, 0, 0.4),
+        0 0 0 1px rgba(255, 255, 255, 0.05);
+    overflow: hidden;
+    transition:
+        transform 0.45s cubic-bezier(0.22, 1, 0.36, 1),
+        box-shadow 0.45s ease,
+        background 0.45s ease;
+}
+
+.TestimonialsCardFrame::after {
+    content: '';
+    position: absolute;
+    inset: 3px;
+    border-radius: 19px;
+    background:
+        linear-gradient(180deg, rgba(255, 255, 255, 0.04) 0%, transparent 28%),
+        rgba(8, 12, 18, 0.92);
+    pointer-events: none;
+    z-index: 1;
+}
+
+.TestimonialsQuoteMark {
+    position: absolute;
+    top: 0.65rem;
+    left: 0.85rem;
+    z-index: 3;
+    font-size: 2.2rem;
+    font-weight: 800;
+    line-height: 1;
+    color: var(--TealBright);
+    font-family: Georgia, 'Times New Roman', serif;
+    text-shadow: 0 0 18px rgba(0, 242, 234, 0.45);
+    pointer-events: none;
+}
+
+.TestimonialsCardMedia {
+    position: relative;
+    z-index: 2;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    border-radius: 19px;
+    display: block;
+}
+
+.TestimonialsCard:hover .TestimonialsCardFrame,
+.TestimonialsCard.IsHovered .TestimonialsCardFrame,
+.TestimonialsCard:focus-visible .TestimonialsCardFrame {
+    transform: scale(1.03);
+    background: linear-gradient(145deg, rgba(0, 242, 234, 0.85), rgba(20, 184, 166, 0.35) 50%, rgba(255, 255, 255, 0.12));
+    box-shadow:
+        0 20px 56px rgba(0, 0, 0, 0.5),
+        0 0 40px rgba(0, 242, 234, 0.18);
+}
+
+.TestimonialsSection .MediaGalleryHeader {
+    margin-bottom: 2rem;
+}
+
+#TestimonialsHoverZoom .MediaHoverZoomFrame {
+    max-width: min(90vw, 560px);
+}
+
+#TestimonialsLightbox .MediaLightboxPanel {
+    width: min(92vw, 640px);
+}
+
+.MediaGalleryItemFrame {
+    position: relative;
+    aspect-ratio: 4 / 5;
+    border-radius: 16px;
+    overflow: hidden;
+    background: rgba(15, 23, 42, 0.6);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    box-shadow: 0 8px 28px rgba(0, 0, 0, 0.35);
+    transition:
+        transform 0.4s cubic-bezier(0.22, 1, 0.36, 1),
+        border-color 0.35s ease,
+        box-shadow 0.35s ease;
+}
+
+.MediaGalleryItemMedia {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+    transition: transform 0.45s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.AwardsSection .MediaGalleryItem:hover .MediaGalleryItemFrame,
+.AwardsSection .MediaGalleryItem.IsHovered .MediaGalleryItemFrame,
+.AwardsSection .MediaGalleryItem:focus-visible .MediaGalleryItemFrame {
+    transform: scale(1.08) translateY(-8px);
+    border-color: rgba(0, 242, 234, 0.45);
+    box-shadow:
+        0 16px 48px rgba(0, 0, 0, 0.45),
+        0 0 32px rgba(20, 184, 166, 0.18);
+    z-index: 2;
+}
+
+.AwardsSection .MediaGalleryItem:hover .MediaGalleryItemMedia,
+.AwardsSection .MediaGalleryItem.IsHovered .MediaGalleryItemMedia,
+.AwardsSection .MediaGalleryItem:focus-visible .MediaGalleryItemMedia {
+    transform: scale(1.06);
+}
+
+.MediaGalleryItemMeta {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 0.5rem;
+    margin-top: 0.75rem;
+    padding: 0 0.15rem;
+}
+
+.MediaGalleryItemLabel {
+    font-size: 0.72rem;
+    font-weight: 700;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: rgba(255, 255, 255, 0.55);
+}
+
+.MediaGalleryItemType {
+    font-size: 0.62rem;
+    font-weight: 800;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--TealBright);
+    padding: 0.18rem 0.5rem;
+    border-radius: 999px;
+    background: rgba(20, 184, 166, 0.15);
+    border: 1px solid rgba(20, 184, 166, 0.3);
+}
+
+.MediaGalleryHint {
+    text-align: center;
+    font-size: 0.72rem;
+    font-weight: 600;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: rgba(255, 255, 255, 0.35);
+}
+
+.MediaHoverZoom {
+    position: fixed;
+    inset: 0;
+    z-index: 9000;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 2rem;
+    pointer-events: none;
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 0.35s ease, visibility 0.35s ease;
+}
+
+.MediaHoverZoom.IsVisible {
+    opacity: 1;
+    visibility: visible;
+}
+
+.MediaHoverZoom::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.55);
+    backdrop-filter: blur(6px);
+}
+
+.MediaHoverZoomFrame {
+    position: relative;
+    z-index: 1;
+    max-width: min(92vw, 900px);
+    max-height: min(82vh, 860px);
+    border-radius: 20px;
+    overflow: hidden;
+    border: 1px solid rgba(0, 242, 234, 0.35);
+    box-shadow:
+        0 24px 80px rgba(0, 0, 0, 0.55),
+        0 0 48px rgba(20, 184, 166, 0.2);
+    background: rgba(15, 23, 42, 0.9);
+    transform: scale(0.88);
+    transition: transform 0.4s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.MediaHoverZoom.IsVisible .MediaHoverZoomFrame {
+    transform: scale(1);
+}
+
+.MediaHoverZoomMedia {
+    display: block;
+    width: 100%;
+    max-height: min(76vh, 800px);
+    object-fit: contain;
+}
+
+.MediaHoverZoomCaption {
+    display: block;
+    padding: 0.85rem 1.25rem;
+    font-size: 0.75rem;
+    font-weight: 700;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--Teal);
+    text-align: center;
+    border-top: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.MediaLightbox {
+    position: fixed;
+    inset: 0;
+    z-index: 10000;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 2rem;
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 0.35s ease, visibility 0.35s ease;
+}
+
+.MediaLightbox.IsOpen {
+    opacity: 1;
+    visibility: visible;
+}
+
+.MediaLightboxBackdrop {
+    position: absolute;
+    inset: 0;
+    border: none;
+    background: rgba(0, 0, 0, 0.82);
+    backdrop-filter: blur(10px);
+    cursor: pointer;
+}
+
+.MediaLightboxPanel {
+    position: relative;
+    z-index: 1;
+    width: min(94vw, 1040px);
+    max-height: 92vh;
+    border-radius: 22px;
+    overflow: hidden;
+    background: linear-gradient(160deg, rgba(20, 30, 40, 0.95) 0%, rgba(0, 0, 0, 0.92) 100%);
+    border: 1px solid rgba(0, 242, 234, 0.3);
+    box-shadow:
+        0 28px 90px rgba(0, 0, 0, 0.6),
+        0 0 60px rgba(20, 184, 166, 0.15);
+    transform: scale(0.92);
+    transition: transform 0.4s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.MediaLightbox.IsOpen .MediaLightboxPanel {
+    transform: scale(1);
+}
+
+.MediaLightboxClose {
+    position: absolute;
+    top: 0.85rem;
+    right: 0.85rem;
+    z-index: 2;
+    width: 40px;
+    height: 40px;
+    border: 1px solid rgba(255, 255, 255, 0.15);
+    border-radius: 50%;
+    background: rgba(0, 0, 0, 0.5);
+    color: var(--White);
+    font-size: 1.5rem;
+    line-height: 1;
+    cursor: pointer;
+    transition: border-color 0.3s ease, background 0.3s ease, transform 0.3s ease;
+}
+
+.MediaLightboxClose:hover {
+    border-color: rgba(0, 242, 234, 0.5);
+    background: rgba(20, 184, 166, 0.2);
+    transform: scale(1.05);
+}
+
+.MediaLightboxContent {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.MediaLightboxMedia {
+    display: block;
+    width: 100%;
+    max-height: calc(92vh - 80px);
+    object-fit: contain;
+    background: #000;
+}
+
+.MediaLightboxCaption {
+    width: 100%;
+    padding: 1rem 1.5rem;
+    font-size: 0.8rem;
+    font-weight: 700;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    text-align: center;
+    color: var(--Teal);
+    border-top: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+body.MediaLightboxActive {
+    overflow: hidden;
+}
+
+body.MediaLightboxActive .CursorLayer {
+    opacity: 0 !important;
+}
+
+/* Work Done section */
+.WorkDoneSection {
+    position: relative;
+    padding: 6rem 2rem 7rem;
+    overflow: hidden;
+    isolation: isolate;
+}
+
+.WorkDoneBg {
+    position: absolute;
+    inset: 0;
+    z-index: 0;
+    pointer-events: none;
+    overflow: hidden;
+}
+
+.WorkDoneBgGrid {
+    position: absolute;
+    inset: -40%;
+    background-image:
+        linear-gradient(rgba(20, 184, 166, 0.04) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(20, 184, 166, 0.04) 1px, transparent 1px);
+    background-size: 48px 48px;
+    animation: WorkDoneGridDrift 32s linear infinite;
+    mask-image: radial-gradient(ellipse 85% 75% at 50% 45%, black 15%, transparent 78%);
+}
+
+@keyframes WorkDoneGridDrift {
+    from { transform: translate(0, 0); }
+    to { transform: translate(48px, 48px); }
+}
+
+.WorkDoneBgOrb {
+    position: absolute;
+    border-radius: 50%;
+    filter: blur(50px);
+    opacity: 0.5;
+}
+
+.WorkDoneBgOrb--One {
+    top: 12%;
+    left: 8%;
+    width: 320px;
+    height: 320px;
+    background: radial-gradient(circle, rgba(0, 242, 234, 0.16) 0%, transparent 72%);
+    animation: WorkDoneOrbFloatOne 16s ease-in-out infinite;
+}
+
+.WorkDoneBgOrb--Two {
+    bottom: 10%;
+    right: 6%;
+    width: 400px;
+    height: 400px;
+    background: radial-gradient(circle, rgba(20, 184, 166, 0.14) 0%, transparent 70%);
+    animation: WorkDoneOrbFloatTwo 20s ease-in-out infinite;
+}
+
+@keyframes WorkDoneOrbFloatOne {
+    0%, 100% { transform: translate(0, 0) scale(1); }
+    50% { transform: translate(35px, -25px) scale(1.06); }
+}
+
+@keyframes WorkDoneOrbFloatTwo {
+    0%, 100% { transform: translate(0, 0) scale(1); }
+    50% { transform: translate(-40px, 30px) scale(1.1); }
+}
+
+.WorkDoneBgLines {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    opacity: 0.3;
+}
+
+.WorkDoneBgPath {
+    fill: none;
+    stroke: rgba(0, 242, 234, 0.22);
+    stroke-width: 1;
+    stroke-dasharray: 6 12;
+    animation: WorkDonePathFlow 24s linear infinite;
+}
+
+.WorkDoneBgPath--Alt {
+    stroke: rgba(20, 184, 166, 0.18);
+    animation-duration: 30s;
+    animation-direction: reverse;
+}
+
+@keyframes WorkDonePathFlow {
+    from { stroke-dashoffset: 0; }
+    to { stroke-dashoffset: -200; }
+}
+
+.WorkDoneBgNode {
+    fill: var(--TealBright);
+    opacity: 0.45;
+    animation: WorkDoneNodePulse 3.5s ease-in-out infinite;
+}
+
+.WorkDoneBgNode:nth-child(3) { animation-delay: 0.5s; }
+.WorkDoneBgNode:nth-child(4) { animation-delay: 1s; }
+.WorkDoneBgNode:nth-child(5) { animation-delay: 1.5s; }
+
+@keyframes WorkDoneNodePulse {
+    0%, 100% { opacity: 0.3; transform: scale(1); }
+    50% { opacity: 0.8; transform: scale(1.4); }
+}
+
+.WorkDoneContainer {
+    position: relative;
+    z-index: 1;
+    max-width: 1180px;
+    margin: 0 auto;
+}
+
+.WorkDoneHeader {
+    text-align: center;
+    max-width: 720px;
+    margin: 0 auto 2.75rem;
+    opacity: 1;
+    transform: translateY(0);
+    filter: blur(0);
+    transition: opacity 0.8s ease, transform 0.8s ease, filter 0.8s ease;
+}
+
+.WorkDoneSection.HasScrollReveal .WorkDoneHeader:not(.IsRevealed) {
+    opacity: 0;
+    transform: translateY(28px);
+    filter: blur(6px);
+}
+
+.WorkDoneEyebrow {
+    font-size: 0.72rem;
+    font-weight: 700;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--Teal);
+    margin-bottom: 0.85rem;
+}
+
+.WorkDoneTitle {
+    font-size: clamp(2rem, 4.5vw, 3rem);
+    font-weight: 800;
+    letter-spacing: -0.03em;
+    line-height: 1.1;
+    margin-bottom: 1rem;
+}
+
+.WorkDoneSubtitle {
+    font-size: clamp(0.92rem, 1.8vw, 1.05rem);
+    line-height: 1.65;
+    color: rgba(255, 255, 255, 0.55);
+}
+
+.WorkDoneFilters {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 0.6rem;
+    margin-bottom: 2.5rem;
+    opacity: 1;
+    transform: translateY(0);
+    transition: opacity 0.8s ease 0.1s, transform 0.8s ease 0.1s;
+}
+
+.WorkDoneSection.HasScrollReveal .WorkDoneFilters:not(.IsRevealed) {
+    opacity: 0;
+    transform: translateY(20px);
+}
+
+.WorkDoneFilter {
+    padding: 0.55rem 1.15rem;
+    border-radius: 999px;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    background: rgba(255, 255, 255, 0.03);
+    color: rgba(255, 255, 255, 0.65);
+    font-family: inherit;
+    font-size: 0.78rem;
+    font-weight: 600;
+    letter-spacing: 0.04em;
+    cursor: pointer;
+    transition: border-color 0.3s ease, background 0.3s ease, color 0.3s ease, box-shadow 0.3s ease, transform 0.3s ease;
+}
+
+.WorkDoneFilter:hover {
+    border-color: rgba(20, 184, 166, 0.35);
+    color: var(--White);
+    transform: translateY(-1px);
+}
+
+.WorkDoneFilter--Active {
+    border-color: rgba(0, 242, 234, 0.45);
+    background: rgba(20, 184, 166, 0.14);
+    color: var(--TealBright);
+    box-shadow: 0 0 24px rgba(20, 184, 166, 0.12);
+}
+
+.WorkDoneGrid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1.35rem;
+}
+
+.WorkDoneCard {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    gap: 0.65rem;
+    padding: 1.6rem 1.5rem 1.45rem;
+    border-radius: 20px;
+    background: linear-gradient(155deg, rgba(255, 255, 255, 0.06) 0%, rgba(255, 255, 255, 0.02) 100%);
+    border: 1px solid rgba(255, 255, 255, 0.09);
+    backdrop-filter: blur(14px);
+    box-shadow:
+        0 10px 36px rgba(0, 0, 0, 0.35),
+        inset 0 1px 0 rgba(255, 255, 255, 0.06);
+    overflow: hidden;
+    opacity: 1;
+    transform: translateY(0);
+    filter: blur(0);
+    transition:
+        opacity 0.75s cubic-bezier(0.22, 1, 0.36, 1),
+        transform 0.75s cubic-bezier(0.22, 1, 0.36, 1),
+        filter 0.75s ease,
+        border-color 0.35s ease,
+        box-shadow 0.35s ease;
+}
+
+.WorkDoneSection.HasScrollReveal .WorkDoneCard:not(.IsRevealed) {
+    opacity: 0;
+    transform: translateY(32px);
+    filter: blur(5px);
+}
+
+.WorkDoneCard.IsHidden {
+    display: none;
+}
+
+.WorkDoneCard--Featured {
+    grid-column: span 2;
+}
+
+.WorkDoneCard:hover {
+    border-color: rgba(20, 184, 166, 0.35);
+    box-shadow:
+        0 16px 48px rgba(0, 0, 0, 0.42),
+        0 0 36px rgba(20, 184, 166, 0.1),
+        inset 0 1px 0 rgba(255, 255, 255, 0.08);
+    transform: translateY(-5px);
+}
+
+.WorkDoneSection.HasScrollReveal .WorkDoneCard.IsRevealed:hover {
+    transform: translateY(-5px);
+}
+
+.WorkDoneCardAccent {
+    position: absolute;
+    top: 0;
+    left: 1.25rem;
+    right: 1.25rem;
+    height: 2px;
+    background: linear-gradient(90deg, transparent, var(--TealBright), transparent);
+    opacity: 0.75;
+}
+
+.WorkDoneCard--Genai .WorkDoneCardAccent {
+    background: linear-gradient(90deg, transparent, var(--TealBright) 25%, #67e8f9 75%, transparent);
+}
+
+.WorkDoneCard--Vision .WorkDoneCardAccent {
+    background: linear-gradient(90deg, transparent, #818cf8 30%, var(--TealBright) 70%, transparent);
+}
+
+.WorkDoneCard--Enterprise .WorkDoneCardAccent {
+    background: linear-gradient(90deg, transparent, var(--Teal) 40%, var(--TealBright) 60%, transparent);
+}
+
+.WorkDoneCard--Iot .WorkDoneCardAccent {
+    background: linear-gradient(90deg, transparent, var(--Green) 40%, var(--TealBright) 70%, transparent);
+}
+
+.WorkDoneCardTop {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 0.75rem;
+    margin-bottom: 0.15rem;
+}
+
+.WorkDoneCardIcon {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 2.5rem;
+    height: 2.5rem;
+    border-radius: 12px;
+    background: linear-gradient(135deg, rgba(20, 184, 166, 0.2) 0%, rgba(0, 242, 234, 0.08) 100%);
+    border: 1px solid rgba(20, 184, 166, 0.25);
+    font-size: 0.95rem;
+    font-weight: 800;
+    color: var(--TealBright);
+    letter-spacing: -0.02em;
+}
+
+.WorkDoneCard--Featured .WorkDoneCardIcon {
+    width: 3rem;
+    height: 3rem;
+    font-size: 1.1rem;
+    border-radius: 14px;
+}
+
+.WorkDoneBadge {
+    padding: 0.3rem 0.7rem;
+    border-radius: 999px;
+    background: rgba(0, 242, 234, 0.12);
+    border: 1px solid rgba(0, 242, 234, 0.3);
+    font-size: 0.62rem;
+    font-weight: 700;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--TealBright);
+}
+
+.WorkDoneDomain {
+    font-size: 0.68rem;
+    font-weight: 600;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: rgba(255, 255, 255, 0.42);
+}
+
+.WorkDoneName {
+    font-size: clamp(1.25rem, 2.2vw, 1.55rem);
+    font-weight: 800;
+    letter-spacing: -0.02em;
+    line-height: 1.15;
+}
+
+.WorkDoneCard--Featured .WorkDoneName {
+    font-size: clamp(1.5rem, 2.8vw, 2rem);
+}
+
+.WorkDoneDesc {
+    font-size: 0.88rem;
+    line-height: 1.65;
+    color: rgba(255, 255, 255, 0.58);
+    flex: 1;
+}
+
+.WorkDoneCard--Featured .WorkDoneDesc {
+    font-size: 0.95rem;
+    max-width: 92%;
+}
+
+.WorkDoneTags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.45rem;
+    margin-top: 0.35rem;
+}
+
+.WorkDoneTag {
+    padding: 0.32rem 0.7rem;
+    border-radius: 999px;
+    background: rgba(255, 255, 255, 0.04);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    font-size: 0.68rem;
+    font-weight: 600;
+    color: rgba(255, 255, 255, 0.72);
+}
+
+.WorkDoneCard:nth-of-type(1).IsRevealed { transition-delay: 0.05s; }
+.WorkDoneCard:nth-of-type(2).IsRevealed { transition-delay: 0.1s; }
+.WorkDoneCard:nth-of-type(3).IsRevealed { transition-delay: 0.15s; }
+.WorkDoneCard:nth-of-type(4).IsRevealed { transition-delay: 0.2s; }
+.WorkDoneCard:nth-of-type(5).IsRevealed { transition-delay: 0.25s; }
+.WorkDoneCard:nth-of-type(6).IsRevealed { transition-delay: 0.3s; }
+.WorkDoneCard:nth-of-type(7).IsRevealed { transition-delay: 0.35s; }
+
+/* Contact section */
+.ContactSection {
+    position: relative;
+    padding: 4rem 2rem 8rem;
+    overflow: hidden;
+}
+
+.ContactCard {
+    position: relative;
+    max-width: 920px;
+    margin: 0 auto;
+    border-radius: 28px;
+    border: 1px solid rgba(20, 184, 166, 0.22);
+    background: linear-gradient(165deg, rgba(12, 18, 16, 0.95) 0%, rgba(0, 0, 0, 0.92) 55%, rgba(8, 14, 12, 0.98) 100%);
+    box-shadow:
+        0 24px 80px rgba(0, 0, 0, 0.5),
+        0 0 60px rgba(20, 184, 166, 0.08),
+        inset 0 1px 0 rgba(255, 255, 255, 0.05);
+    overflow: hidden;
+    opacity: 1;
+    transform: translateY(0);
+    transition: opacity 0.9s cubic-bezier(0.22, 1, 0.36, 1), transform 0.9s cubic-bezier(0.22, 1, 0.36, 1), filter 0.9s ease;
+}
+
+.ContactSection.HasScrollReveal .ContactCard:not(.IsRevealed) {
+    opacity: 0;
+    transform: translateY(36px);
+    filter: blur(6px);
+}
+
+.ContactCard.IsRevealed {
+    opacity: 1;
+    transform: translateY(0);
+    filter: blur(0);
+}
+
+.ContactCardGrid {
+    position: absolute;
+    inset: 0;
+    background-image:
+        linear-gradient(rgba(20, 184, 166, 0.06) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(20, 184, 166, 0.06) 1px, transparent 1px);
+    background-size: 42px 42px;
+    mask-image: radial-gradient(ellipse 90% 80% at 50% 40%, black 15%, transparent 80%);
+    pointer-events: none;
+}
+
+.ContactCardGlow {
+    position: absolute;
+    top: -20%;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 70%;
+    height: 50%;
+    background: radial-gradient(ellipse, rgba(20, 184, 166, 0.14) 0%, transparent 70%);
+    pointer-events: none;
+}
+
+.ContactCardInner {
+    position: relative;
+    z-index: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    padding: clamp(2.5rem, 5vw, 4rem) clamp(1.5rem, 4vw, 3.5rem);
+}
+
+.ContactStatusPill {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.45rem 1rem;
+    border-radius: 999px;
+    background: rgba(255, 255, 255, 0.04);
+    border: 1px solid rgba(20, 184, 166, 0.25);
+    font-size: 0.75rem;
+    font-weight: 500;
+    color: var(--White);
+    margin-bottom: 2rem;
+}
+
+.ContactTitle {
+    font-size: clamp(1.85rem, 4.5vw, 3rem);
+    font-weight: 800;
+    letter-spacing: -0.03em;
+    line-height: 1.12;
+    color: var(--White);
+    margin-bottom: 1rem;
+    max-width: 640px;
+}
+
+.ContactSubtitle {
+    font-size: clamp(0.92rem, 1.8vw, 1.05rem);
+    line-height: 1.65;
+    color: rgba(255, 255, 255, 0.55);
+    max-width: 520px;
+    margin-bottom: 2rem;
+}
+
+.ContactActions {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: center;
+    gap: 0.85rem;
+    margin-bottom: 2.25rem;
+}
+
+.ContactEmailButton {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.85rem;
+    padding: 1rem 2rem;
+    border-radius: 999px;
+    background: linear-gradient(135deg, var(--TealBright) 0%, var(--Teal) 100%);
+    color: var(--Black);
+    font-size: clamp(0.9rem, 1.6vw, 1.05rem);
+    font-weight: 700;
+    text-decoration: none;
+    box-shadow:
+        0 8px 32px rgba(0, 242, 234, 0.35),
+        0 0 40px rgba(20, 184, 166, 0.2);
+    transition: transform 0.35s ease, box-shadow 0.35s ease;
+}
+
+.ContactLinkedInButton {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4rem;
+    padding: 1rem 1.5rem;
+    border-radius: 999px;
+    background: rgba(255, 255, 255, 0.04);
+    border: 1px solid rgba(255, 255, 255, 0.12);
+    color: rgba(255, 255, 255, 0.9);
+    font-size: clamp(0.9rem, 1.6vw, 1.05rem);
+    font-weight: 600;
+    text-decoration: none;
+    transition: border-color 0.3s ease, background 0.3s ease, transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.ContactLinkedInButton:hover {
+    border-color: rgba(20, 184, 166, 0.45);
+    background: rgba(20, 184, 166, 0.1);
+    transform: translateY(-3px);
+    box-shadow: 0 8px 28px rgba(20, 184, 166, 0.12);
+}
+
+.ContactEmailButton:hover {
+    transform: translateY(-3px);
+    box-shadow:
+        0 12px 40px rgba(0, 242, 234, 0.45),
+        0 0 50px rgba(20, 184, 166, 0.28);
+}
+
+.ContactEmailArrow {
+    font-size: 1.2rem;
+    line-height: 1;
+}
+
+.ContactForm {
+    width: 100%;
+    max-width: 620px;
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    margin-bottom: 2rem;
+}
+
+.ContactFormRow {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1rem;
+}
+
+.ContactField {
+    display: flex;
+    flex-direction: column;
+    gap: 0.45rem;
+    text-align: left;
+}
+
+.ContactFieldLabel {
+    font-size: 0.68rem;
+    font-weight: 700;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: rgba(255, 255, 255, 0.45);
+}
+
+.ContactInput {
+    width: 100%;
+    padding: 0.85rem 1rem;
+    border-radius: 12px;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    background: rgba(0, 0, 0, 0.35);
+    color: var(--White);
+    font-family: inherit;
+    font-size: 0.92rem;
+    transition: border-color 0.3s ease, box-shadow 0.3s ease, background 0.3s ease;
+}
+
+.ContactInput::placeholder {
+    color: rgba(255, 255, 255, 0.3);
+}
+
+.ContactInput:focus {
+    outline: none;
+    border-color: rgba(0, 242, 234, 0.45);
+    background: rgba(0, 0, 0, 0.5);
+    box-shadow: 0 0 0 3px rgba(20, 184, 166, 0.12);
+}
+
+.ContactTextarea {
+    resize: vertical;
+    min-height: 120px;
+}
+
+.ContactHoney {
+    position: absolute;
+    left: -9999px;
+    opacity: 0;
+    pointer-events: none;
+}
+
+.ContactSubmitButton {
+    position: relative;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    align-self: center;
+    min-width: 180px;
+    padding: 0.9rem 2rem;
+    border: 1px solid rgba(0, 242, 234, 0.35);
+    border-radius: 999px;
+    background: rgba(20, 184, 166, 0.12);
+    color: var(--TealBright);
+    font-family: inherit;
+    font-size: 0.88rem;
+    font-weight: 700;
+    letter-spacing: 0.04em;
+    cursor: pointer;
+    transition: background 0.3s ease, border-color 0.3s ease, transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.ContactSubmitButton:hover:not(:disabled) {
+    background: rgba(20, 184, 166, 0.22);
+    border-color: rgba(0, 242, 234, 0.55);
+    transform: translateY(-2px);
+    box-shadow: 0 8px 28px rgba(20, 184, 166, 0.15);
+}
+
+.ContactSubmitButton:disabled {
+    opacity: 0.7;
+    cursor: wait;
+}
+
+.ContactSubmitLoader {
+    display: none;
+    width: 18px;
+    height: 18px;
+    border: 2px solid rgba(0, 242, 234, 0.25);
+    border-top-color: var(--TealBright);
+    border-radius: 50%;
+    animation: ContactSpin 0.7s linear infinite;
+}
+
+.ContactSubmitButton.IsLoading .ContactSubmitText {
+    opacity: 0;
+}
+
+.ContactSubmitButton.IsLoading .ContactSubmitLoader {
+    display: block;
+    position: absolute;
+}
+
+@keyframes ContactSpin {
+    to { transform: rotate(360deg); }
+}
+
+.ContactFormStatus {
+    min-height: 1.25rem;
+    font-size: 0.82rem;
+    font-weight: 600;
+    text-align: center;
+    color: rgba(255, 255, 255, 0.45);
+}
+
+.ContactFormStatus--Success {
+    color: var(--TealBright);
+}
+
+.ContactFormStatus--Error {
+    color: #f87171;
+}
+
+.ContactFormStatus--Pending {
+    color: var(--Teal);
+}
+
+.ContactLinkIcon {
+    font-size: 0.95rem;
+    line-height: 1;
+    color: var(--Teal);
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .SkillsSection.HasScrollReveal .SkillsCard,
+    .SkillsSection.HasScrollReveal .SkillsHeader,
+    .SkillsSection.HasScrollReveal .SkillsDivider,
+    .SkillsSection.HasScrollReveal .TechTagsGroup {
+        opacity: 1;
+        transform: none;
+        transition: none;
+    }
+
+    .JourneySection.HasScrollReveal .JourneyHeader:not(.IsRevealed),
+    .JourneySection.HasScrollReveal .JourneyAwards:not(.IsRevealed),
+    .JourneySection.HasScrollReveal .JourneyNode:not(.IsRevealed),
+    .JourneySection.HasScrollReveal .JourneyPhaseLabel:not(.IsRevealed) {
+        opacity: 1;
+        transform: none;
+        filter: none;
+        transition: none;
+    }
+
+    .JourneyNode.IsRevealed .JourneyCard,
+    .JourneyNode--Current.IsRevealed .JourneyCard {
+        animation: none;
+    }
+
+    .JourneyBgGrid,
+    .JourneyBgOrb,
+    .JourneyBgPath,
+    .JourneyBgNode,
+    .JourneyBgScanline {
+        animation: none;
+    }
+
+    .MediaGallerySection.HasScrollReveal .MediaGalleryHeader:not(.IsRevealed),
+    .MediaGallerySection.HasScrollReveal .MediaScrollWrap:not(.IsRevealed) {
+        opacity: 1;
+        transform: none;
+        filter: none;
+        transition: none;
+    }
+
+    .MediaCarousel.IsAutoPlaying {
+        animation: none;
+    }
+
+    .MediaHoverZoom {
+        display: none;
+    }
+
+    .JourneyNode--Current .JourneyMarker::before {
+        animation: none;
+    }
+
+    .JourneyTrackFill {
+        height: 100% !important;
+    }
+
+    .ContactSection.HasScrollReveal .ContactCard:not(.IsRevealed) {
+        opacity: 1;
+        transform: none;
+        filter: none;
+        transition: none;
+    }
+
+    .ContactSubmitLoader {
+        animation: none;
+    }
+
+    .WorkDoneSection.HasScrollReveal .WorkDoneHeader:not(.IsRevealed),
+    .WorkDoneSection.HasScrollReveal .WorkDoneFilters:not(.IsRevealed),
+    .WorkDoneSection.HasScrollReveal .WorkDoneCard:not(.IsRevealed) {
+        opacity: 1;
+        transform: none;
+        filter: none;
+        transition: none;
+    }
+
+    .WorkDoneBgGrid,
+    .WorkDoneBgOrb,
+    .WorkDoneBgPath,
+    .WorkDoneBgNode {
+        animation: none;
+    }
 }
 
 /* Responsive */
@@ -660,6 +2991,22 @@ body {
     .TechTagsGrid {
         grid-template-columns: repeat(2, 1fr);
     }
+
+    .JourneyTimeline {
+        padding-left: 2rem;
+    }
+
+    .JourneyMarker {
+        left: -2rem;
+    }
+
+    .WorkDoneGrid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+
+    .WorkDoneCard--Featured {
+        grid-column: span 2;
+    }
 }
 
 @media (max-width: 640px) {
@@ -694,5 +3041,103 @@ body {
 
     .TechTagsGrid {
         grid-template-columns: 1fr;
+    }
+
+    .JourneySection {
+        padding: 4rem 1.25rem 5rem;
+    }
+
+    .JourneyCard {
+        padding: 1.35rem 1.25rem;
+    }
+
+    .JourneyCard:hover {
+        transform: none;
+    }
+
+    .JourneyAwards {
+        gap: 0.45rem;
+    }
+
+    .JourneyAward {
+        font-size: 0.68rem;
+        padding: 0.4rem 0.75rem;
+    }
+
+    .MediaGalleryContainer {
+        padding: 0 1.25rem;
+    }
+
+    .MediaGallerySection {
+        padding: 4rem 0 5rem;
+    }
+
+    .MediaGalleryItem {
+        width: clamp(200px, 58vw, 280px);
+    }
+
+    .TestimonialsSection .MediaGalleryItem,
+    .TestimonialsCard {
+        width: clamp(220px, 62vw, 280px);
+    }
+
+    .TestimonialsCard:nth-child(even),
+    .TestimonialsCard:nth-child(odd) {
+        transform: none;
+    }
+
+    .TestimonialsCard:hover,
+    .TestimonialsCard.IsHovered,
+    .TestimonialsCard:focus-visible {
+        transform: scale(1.03);
+    }
+
+    .TestimonialsBgQuote {
+        display: none;
+    }
+
+    .WorkDoneSection {
+        padding: 4rem 1.25rem 5rem;
+    }
+
+    .WorkDoneGrid {
+        grid-template-columns: 1fr;
+    }
+
+    .WorkDoneCard--Featured {
+        grid-column: span 1;
+    }
+
+    .WorkDoneCard--Featured .WorkDoneDesc {
+        max-width: 100%;
+    }
+
+    .MediaHoverZoom {
+        padding: 1rem;
+    }
+
+    .ContactSection {
+        padding: 3rem 1.25rem 5rem;
+    }
+
+    .ContactCardInner {
+        padding: 2rem 1.25rem;
+    }
+
+    .ContactFormRow {
+        grid-template-columns: 1fr;
+    }
+
+    .ContactActions {
+        flex-direction: column;
+        width: 100%;
+    }
+
+    .ContactEmailButton,
+    .ContactLinkedInButton {
+        width: 100%;
+        padding: 0.95rem 1.25rem;
+        font-size: 0.85rem;
+        justify-content: center;
     }
 }

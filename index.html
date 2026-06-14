@@ -10,6 +10,12 @@
     <link rel="stylesheet" href="styles.css">
 </head>
 <body>
+    <div class="CursorLayer" aria-hidden="true">
+        <div class="CursorGlow"></div>
+        <div class="CursorRing"></div>
+        <div class="CursorDot"></div>
+    </div>
+
     <div class="PageWrapper">
         <nav class="NavBar">
             <a href="#" class="NavLogo">Prachi Dabi</a>
@@ -25,7 +31,7 @@
         <section class="HeroSection">
             <div class="HeroImageWrapper">
                 <img
-                    src="ProfileImage.png"
+                    src="Assets/ProfileImage.png"
                     alt="Prachi Dabi"
                     class="HeroImage"
                 >
@@ -109,38 +115,53 @@
 
     <section class="SkillsSection" id="Skills">
         <div class="SkillsContainer">
+            <header class="SkillsHeader">
+                <p class="SkillsEyebrow">Depth &amp; Range</p>
+                <h2 class="SkillsTitle">Skills &amp; Experience</h2>
+                <p class="SkillsSubtitle">Years of hands-on work across AI systems, engineering, and enterprise delivery—organized by depth and domain.</p>
+            </header>
+
             <div class="SkillsGrid">
-                <div class="SkillsCard">
+                <div class="SkillsCard SkillsCard--Core">
+                    <div class="SkillsCardAccent" aria-hidden="true"></div>
                     <h3 class="SkillsCardTitle">Core Expertise</h3>
                     <ul class="SkillsList">
-                        <li><span>AI Systems &amp; GenAI</span><span class="SkillsYears">3+ Years</span></li>
-                        <li><span>Solution Architecture</span><span class="SkillsYears">4+ Years</span></li>
-                        <li><span>Python Development</span><span class="SkillsYears">6+ Years</span></li>
-                        <li><span>Backend Engineering</span><span class="SkillsYears">6+ Years</span></li>
-                        <li><span>Enterprise Software</span><span class="SkillsYears">6+ Years</span></li>
+                        <li data-years="3"><span class="SkillsName">AI Systems &amp; GenAI</span><span class="SkillsYears">3+ Years</span></li>
+                        <li data-years="4"><span class="SkillsName">Solution Architecture</span><span class="SkillsYears">4+ Years</span></li>
+                        <li data-years="6"><span class="SkillsName">Python Development</span><span class="SkillsYears">6+ Years</span></li>
+                        <li data-years="6"><span class="SkillsName">Backend Engineering</span><span class="SkillsYears">6+ Years</span></li>
+                        <li data-years="6"><span class="SkillsName">Enterprise Software</span><span class="SkillsYears">6+ Years</span></li>
                     </ul>
                 </div>
-                <div class="SkillsCard">
+                <div class="SkillsCard SkillsCard--Advanced">
+                    <div class="SkillsCardAccent" aria-hidden="true"></div>
                     <h3 class="SkillsCardTitle">Advanced Expertise</h3>
                     <ul class="SkillsList">
-                        <li><span>Computer Vision</span><span class="SkillsYears">3+ Years</span></li>
-                        <li><span>IoT &amp; Robotics</span><span class="SkillsYears">6+ Years</span></li>
-                        <li><span>Full Stack Development</span><span class="SkillsYears">6+ Years</span></li>
-                        <li><span>API Design &amp; Integration</span><span class="SkillsYears">6+ Years</span></li>
-                        <li><span>Database Design</span><span class="SkillsYears">6+ Years</span></li>
-                        <li><span>Technical Leadership</span><span class="SkillsYears">4+ Years</span></li>
+                        <li data-years="3"><span class="SkillsName">Computer Vision</span><span class="SkillsYears">3+ Years</span></li>
+                        <li data-years="6"><span class="SkillsName">IoT &amp; Robotics</span><span class="SkillsYears">6+ Years</span></li>
+                        <li data-years="6"><span class="SkillsName">Full Stack Development</span><span class="SkillsYears">6+ Years</span></li>
+                        <li data-years="6"><span class="SkillsName">API Design &amp; Integration</span><span class="SkillsYears">6+ Years</span></li>
+                        <li data-years="6"><span class="SkillsName">Database Design</span><span class="SkillsYears">6+ Years</span></li>
+                        <li data-years="4"><span class="SkillsName">Technical Leadership</span><span class="SkillsYears">4+ Years</span></li>
                     </ul>
                 </div>
-                <div class="SkillsCard">
+                <div class="SkillsCard SkillsCard--Working">
+                    <div class="SkillsCardAccent" aria-hidden="true"></div>
                     <h3 class="SkillsCardTitle">Strong Working Expertise</h3>
                     <ul class="SkillsList">
-                        <li><span>Cloud &amp; DevOps</span><span class="SkillsYears">4+ Years</span></li>
-                        <li><span>React</span><span class="SkillsYears">3+ Years</span></li>
-                        <li><span>Mobile Development</span><span class="SkillsYears">3+ Years</span></li>
-                        <li><span>Linux Administration</span><span class="SkillsYears">4+ Years</span></li>
-                        <li><span>Security Testing</span><span class="SkillsYears">2+ Years</span></li>
+                        <li data-years="4"><span class="SkillsName">Cloud &amp; DevOps</span><span class="SkillsYears">4+ Years</span></li>
+                        <li data-years="3"><span class="SkillsName">React</span><span class="SkillsYears">3+ Years</span></li>
+                        <li data-years="3"><span class="SkillsName">Mobile Development</span><span class="SkillsYears">3+ Years</span></li>
+                        <li data-years="4"><span class="SkillsName">Linux Administration</span><span class="SkillsYears">4+ Years</span></li>
+                        <li data-years="2"><span class="SkillsName">Security Testing</span><span class="SkillsYears">2+ Years</span></li>
                     </ul>
                 </div>
+            </div>
+
+            <div class="SkillsDivider" aria-hidden="true">
+                <span class="SkillsDividerLine"></span>
+                <span class="SkillsDividerDot"></span>
+                <span class="SkillsDividerLine"></span>
             </div>
 
             <div class="TechTagsBlock">
@@ -209,6 +230,465 @@
         </div>
     </section>
 
+    <section class="JourneySection" id="Journey">
+        <div class="JourneyBg" aria-hidden="true">
+            <div class="JourneyBgGrid"></div>
+            <div class="JourneyBgOrb JourneyBgOrb--One"></div>
+            <div class="JourneyBgOrb JourneyBgOrb--Two"></div>
+            <div class="JourneyBgOrb JourneyBgOrb--Three"></div>
+            <svg class="JourneyBgLines" viewBox="0 0 1200 800" preserveAspectRatio="xMidYMid slice">
+                <circle class="JourneyBgNode" cx="180" cy="120" r="3"/>
+                <circle class="JourneyBgNode" cx="420" cy="280" r="2"/>
+                <circle class="JourneyBgNode" cx="680" cy="180" r="3"/>
+                <circle class="JourneyBgNode" cx="920" cy="340" r="2"/>
+                <circle class="JourneyBgNode" cx="1040" cy="520" r="3"/>
+                <circle class="JourneyBgNode" cx="260" cy="560" r="2"/>
+                <circle class="JourneyBgNode" cx="760" cy="640" r="3"/>
+                <path class="JourneyBgPath" d="M180,120 Q300,200 420,280 T680,180 T920,340"/>
+                <path class="JourneyBgPath JourneyBgPath--Alt" d="M420,280 Q550,420 760,640 T1040,520 T260,560"/>
+            </svg>
+            <div class="JourneyBgScanline"></div>
+        </div>
+
+        <div class="JourneyContainer">
+            <header class="JourneyHeader">
+                <p class="JourneyEyebrow">Growth &amp; Impact</p>
+                <h2 class="JourneyTitle">Corporate Journey</h2>
+                <p class="JourneySubtitle">From academic foundations at Pune University to leading AI and enterprise programs at Tech Mahindra—one continuous arc of building, learning, and delivering.</p>
+            </header>
+
+            <div class="JourneyTimeline">
+                <div class="JourneyTrack" aria-hidden="true">
+                    <div class="JourneyTrackFill"></div>
+                </div>
+
+                <article class="JourneyNode JourneyNode--Corporate JourneyNode--Current" data-year="2021">
+                    <div class="JourneyMarker">
+                        <span class="JourneyMarkerIcon" aria-hidden="true">&#9670;</span>
+                    </div>
+                    <div class="JourneyCard">
+                        <div class="JourneyCardTop">
+                            <span class="JourneyPeriod">2021 – Present</span>
+                            <span class="JourneyBadge">Now</span>
+                        </div>
+                        <h3 class="JourneyRole">Sr. Software Engineer</h3>
+                        <p class="JourneyOrg">Tech Mahindra</p>
+                        <ul class="JourneyHighlights">
+                            <li>Lead and upskill teams on AI-based programs and enterprise delivery.</li>
+                            <li>Executed end-to-end AI POCs that scaled into full-time production projects.</li>
+                            <li>Designed server architecture for metaverse application deployments.</li>
+                            <li>Lead and mentored a group of 15 engineers.</li>
+                        </ul>
+                        <div class="JourneyTags">
+                            <span class="JourneyTag">AI Leadership</span>
+                            <span class="JourneyTag">Metaverse</span>
+                            <span class="JourneyTag">Architecture</span>
+                        </div>
+                    </div>
+                </article>
+
+                <article class="JourneyNode JourneyNode--Corporate" data-year="2020">
+                    <div class="JourneyMarker">
+                        <span class="JourneyMarkerIcon" aria-hidden="true">&#9670;</span>
+                    </div>
+                    <div class="JourneyCard">
+                        <div class="JourneyCardTop">
+                            <span class="JourneyPeriod">2020 – 2021</span>
+                        </div>
+                        <h3 class="JourneyRole">Software Engineer</h3>
+                        <p class="JourneyOrg">Tech Mahindra</p>
+                        <ul class="JourneyHighlights">
+                            <li>Delivered a year-long billable engagement for a US-based client.</li>
+                            <li>Served as technical lead for architecture decisions and engineering direction.</li>
+                            <li>Led a cross-functional team of 10 across development, QA, and design.</li>
+                            <li>Drove stakeholder alignment and client communications end to end.</li>
+                        </ul>
+                        <div class="JourneyTags">
+                            <span class="JourneyTag">Technical Lead</span>
+                            <span class="JourneyTag">Client Delivery</span>
+                        </div>
+                    </div>
+                </article>
+
+                <article class="JourneyNode JourneyNode--Corporate" data-year="2019">
+                    <div class="JourneyMarker">
+                        <span class="JourneyMarkerIcon" aria-hidden="true">&#9670;</span>
+                    </div>
+                    <div class="JourneyCard">
+                        <div class="JourneyCardTop">
+                            <span class="JourneyPeriod">2019 – 2020</span>
+                        </div>
+                        <h3 class="JourneyRole">Associate Software Engineer</h3>
+                        <p class="JourneyOrg">Tech Mahindra</p>
+                        <ul class="JourneyHighlights">
+                            <li>Sole developer across frontend, backend, APIs, and microcontroller integrations.</li>
+                            <li>Built secure web applications and executed VAPT &amp; WAPT security testing.</li>
+                            <li>Established agile, methodological delivery practices across projects.</li>
+                        </ul>
+                        <div class="JourneyTags">
+                            <span class="JourneyTag">Full Stack</span>
+                            <span class="JourneyTag">IoT</span>
+                            <span class="JourneyTag">Security</span>
+                        </div>
+                    </div>
+                </article>
+
+                <article class="JourneyNode JourneyNode--Corporate" data-year="2018">
+                    <div class="JourneyMarker">
+                        <span class="JourneyMarkerIcon" aria-hidden="true">&#9670;</span>
+                    </div>
+                    <div class="JourneyCard">
+                        <div class="JourneyCardTop">
+                            <span class="JourneyPeriod">2018 – 2019</span>
+                        </div>
+                        <h3 class="JourneyRole">Intern</h3>
+                        <p class="JourneyOrg">Tech Mahindra</p>
+                        <ul class="JourneyHighlights">
+                            <li>6-month internship focused on IoT and robotics engineering.</li>
+                            <li>Contributed to 4 major projects spanning web, embedded devices, and robotics.</li>
+                            <li>Owned technical development and testing across the project lifecycle.</li>
+                        </ul>
+                        <div class="JourneyTags">
+                            <span class="JourneyTag">IoT</span>
+                            <span class="JourneyTag">Robotics</span>
+                        </div>
+                    </div>
+                </article>
+
+                <div class="JourneyPhaseLabel">
+                    <span class="JourneyPhaseLine" aria-hidden="true"></span>
+                    <span class="JourneyPhaseText">Academic Foundation</span>
+                    <span class="JourneyPhaseLine" aria-hidden="true"></span>
+                </div>
+
+                <article class="JourneyNode JourneyNode--Education" data-year="2017">
+                    <div class="JourneyMarker">
+                        <span class="JourneyMarkerIcon JourneyMarkerIcon--Education" aria-hidden="true">&#9672;</span>
+                    </div>
+                    <div class="JourneyCard JourneyCard--Education">
+                        <div class="JourneyCardTop">
+                            <span class="JourneyPeriod">2017 – 2019</span>
+                            <span class="JourneyBadge JourneyBadge--Academic">Rank Holder</span>
+                        </div>
+                        <h3 class="JourneyRole">Master of Computer Science</h3>
+                        <p class="JourneyOrg">Pune University</p>
+                        <p class="JourneyNote">Rank holder across all 5 years of graduation and post-graduation.</p>
+                    </div>
+                </article>
+
+                <article class="JourneyNode JourneyNode--Education" data-year="2014">
+                    <div class="JourneyMarker">
+                        <span class="JourneyMarkerIcon JourneyMarkerIcon--Education" aria-hidden="true">&#9672;</span>
+                    </div>
+                    <div class="JourneyCard JourneyCard--Education">
+                        <div class="JourneyCardTop">
+                            <span class="JourneyPeriod">2014 – 2017</span>
+                            <span class="JourneyBadge JourneyBadge--Academic">Rank Holder</span>
+                        </div>
+                        <h3 class="JourneyRole">Bachelor of Computer Science</h3>
+                        <p class="JourneyOrg">Pune University</p>
+                        <p class="JourneyNote">Won inter-college paper presentation competitions in Electronics, Computer Science, and Mathematics.</p>
+                    </div>
+                </article>
+
+                <article class="JourneyNode JourneyNode--Education" data-year="2012">
+                    <div class="JourneyMarker">
+                        <span class="JourneyMarkerIcon JourneyMarkerIcon--Education" aria-hidden="true">&#9672;</span>
+                    </div>
+                    <div class="JourneyCard JourneyCard--Education">
+                        <div class="JourneyCardTop">
+                            <span class="JourneyPeriod">2012 – 2014</span>
+                        </div>
+                        <h3 class="JourneyRole">12th — Science</h3>
+                        <p class="JourneyOrg">HSC, Maharashtra State Board</p>
+                    </div>
+                </article>
+
+                <article class="JourneyNode JourneyNode--Education" data-year="2010">
+                    <div class="JourneyMarker">
+                        <span class="JourneyMarkerIcon JourneyMarkerIcon--Education" aria-hidden="true">&#9672;</span>
+                    </div>
+                    <div class="JourneyCard JourneyCard--Education">
+                        <div class="JourneyCardTop">
+                            <span class="JourneyPeriod">2010 – 2012</span>
+                        </div>
+                        <h3 class="JourneyRole">10th — SSC</h3>
+                        <p class="JourneyOrg">Maharashtra State Board</p>
+                        <p class="JourneyNote">Cleared SPEED (Society for Promotion of Excellence in Electronics Discipline) with B Grade.</p>
+                    </div>
+                </article>
+            </div>
+        </div>
+    </section>
+
+    <section class="AwardsSection MediaGallerySection" id="Awards">
+        <div class="MediaGalleryContainer">
+            <header class="MediaGalleryHeader">
+                <p class="MediaGalleryEyebrow">Recognition &amp; Milestones</p>
+                <h2 class="MediaGalleryTitle">Awards &amp; Achievements</h2>
+                <p class="MediaGallerySubtitle">Certificates, honors, and moments of recognition—scroll through the journey of wins across Tech Mahindra and beyond.</p>
+            </header>
+        </div>
+
+        <div class="MediaScrollWrap" id="AwardsScrollWrap">
+            <div class="MediaCarousel" id="AwardsCarousel">
+                <div class="MediaTrack" id="AwardsTrack"></div>
+                <div class="MediaTrack MediaTrack--Clone" id="AwardsTrackClone" aria-hidden="true"></div>
+            </div>
+        </div>
+
+        <div class="MediaGalleryContainer MediaGalleryContainer--Hint">
+            <p class="MediaGalleryHint" aria-hidden="true">Auto-scrolling gallery · hover to preview · click to enlarge</p>
+        </div>
+    </section>
+
+    <div class="MediaHoverZoom" id="AwardsHoverZoom" aria-hidden="true">
+        <div class="MediaHoverZoomFrame"></div>
+    </div>
+
+    <div class="MediaLightbox" id="AwardsLightbox" aria-hidden="true">
+        <button class="MediaLightboxBackdrop" type="button" aria-label="Close preview"></button>
+        <div class="MediaLightboxPanel" role="dialog" aria-modal="true" aria-label="Award preview">
+            <button class="MediaLightboxClose" type="button" aria-label="Close preview">&times;</button>
+            <div class="MediaLightboxContent" id="AwardsLightboxContent"></div>
+        </div>
+    </div>
+
+    <section class="TestimonialsSection MediaGallerySection" id="Testimonials">
+        <div class="TestimonialsBg" aria-hidden="true">
+            <span class="TestimonialsBgQuote TestimonialsBgQuote--Left">“</span>
+            <span class="TestimonialsBgQuote TestimonialsBgQuote--Right">”</span>
+            <div class="TestimonialsBgGrid"></div>
+        </div>
+
+        <div class="MediaGalleryContainer">
+            <header class="MediaGalleryHeader">
+                <p class="MediaGalleryEyebrow">Client Voices</p>
+                <h2 class="MediaGalleryTitle">Testimonials</h2>
+                <p class="MediaGallerySubtitle">Feedback and appreciation from clients and collaborators—real words on real impact delivered across projects.</p>
+            </header>
+        </div>
+
+        <div class="MediaScrollWrap" id="TestimonialsScrollWrap">
+            <div class="MediaCarousel" id="TestimonialsCarousel">
+                <div class="MediaTrack" id="TestimonialsTrack"></div>
+                <div class="MediaTrack MediaTrack--Clone" id="TestimonialsTrackClone" aria-hidden="true"></div>
+            </div>
+        </div>
+
+        <div class="MediaGalleryContainer MediaGalleryContainer--Hint">
+            <p class="MediaGalleryHint" aria-hidden="true">Auto-scrolling gallery · hover to preview · click to enlarge</p>
+        </div>
+    </section>
+
+    <div class="MediaHoverZoom" id="TestimonialsHoverZoom" aria-hidden="true">
+        <div class="MediaHoverZoomFrame"></div>
+    </div>
+
+    <div class="MediaLightbox" id="TestimonialsLightbox" aria-hidden="true">
+        <button class="MediaLightboxBackdrop" type="button" aria-label="Close preview"></button>
+        <div class="MediaLightboxPanel" role="dialog" aria-modal="true" aria-label="Testimonial preview">
+            <button class="MediaLightboxClose" type="button" aria-label="Close preview">&times;</button>
+            <div class="MediaLightboxContent" id="TestimonialsLightboxContent"></div>
+        </div>
+    </div>
+
+    <!-- <section class="WorkDoneSection" id="WorkDone">
+        <div class="WorkDoneBg" aria-hidden="true">
+            <div class="WorkDoneBgGrid"></div>
+            <div class="WorkDoneBgOrb WorkDoneBgOrb--One"></div>
+            <div class="WorkDoneBgOrb WorkDoneBgOrb--Two"></div>
+            <svg class="WorkDoneBgLines" viewBox="0 0 1200 600" preserveAspectRatio="xMidYMid slice">
+                <path class="WorkDoneBgPath" d="M0,300 Q200,120 400,280 T800,220 T1200,320"/>
+                <path class="WorkDoneBgPath WorkDoneBgPath--Alt" d="M0,420 Q300,500 600,360 T1200,400"/>
+                <circle class="WorkDoneBgNode" cx="120" cy="180" r="3"/>
+                <circle class="WorkDoneBgNode" cx="480" cy="320" r="2"/>
+                <circle class="WorkDoneBgNode" cx="840" cy="200" r="3"/>
+                <circle class="WorkDoneBgNode" cx="1060" cy="380" r="2"/>
+            </svg>
+        </div>
+
+        <div class="WorkDoneContainer">
+            <header class="WorkDoneHeader">
+                <p class="WorkDoneEyebrow">Production Systems</p>
+                <h2 class="WorkDoneTitle">Work Done</h2>
+                <p class="WorkDoneSubtitle">End-to-end platforms delivered across GenAI, computer vision, enterprise web, and IoT—from POC to production at scale.</p>
+            </header>
+
+            <div class="WorkDoneFilters" role="tablist" aria-label="Filter projects">
+                <button class="WorkDoneFilter WorkDoneFilter--Active" type="button" data-filter="All" role="tab" aria-selected="true">All</button>
+                <button class="WorkDoneFilter" type="button" data-filter="Genai" role="tab" aria-selected="false">GenAI</button>
+                <button class="WorkDoneFilter" type="button" data-filter="Vision" role="tab" aria-selected="false">Vision</button>
+                <button class="WorkDoneFilter" type="button" data-filter="Enterprise" role="tab" aria-selected="false">Enterprise</button>
+                <button class="WorkDoneFilter" type="button" data-filter="Iot" role="tab" aria-selected="false">IoT</button>
+            </div>
+
+            <div class="WorkDoneGrid">
+                <article class="WorkDoneCard WorkDoneCard--Featured WorkDoneCard--Genai" data-category="Genai">
+                    <div class="WorkDoneCardAccent" aria-hidden="true"></div>
+                    <div class="WorkDoneCardTop">
+                        <span class="WorkDoneCardIcon" aria-hidden="true">V</span>
+                        <span class="WorkDoneBadge">Flagship</span>
+                    </div>
+                    <span class="WorkDoneDomain">AI Frameworks · Intelligent Automation</span>
+                    <h3 class="WorkDoneName">Veda</h3>
+                    <p class="WorkDoneDesc">AI agentic framework with admin portal, Excel &amp; Word plugins, and a Chrome extension—built for enterprise intelligent automation workflows.</p>
+                    <div class="WorkDoneTags">
+                        <span class="WorkDoneTag">GenAI</span>
+                        <span class="WorkDoneTag">Django</span>
+                        <span class="WorkDoneTag">REST API</span>
+                        <span class="WorkDoneTag">MongoDB</span>
+                    </div>
+                </article>
+
+                <article class="WorkDoneCard WorkDoneCard--Vision" data-category="Vision">
+                    <div class="WorkDoneCardAccent" aria-hidden="true"></div>
+                    <div class="WorkDoneCardTop">
+                        <span class="WorkDoneCardIcon" aria-hidden="true">C</span>
+                    </div>
+                    <span class="WorkDoneDomain">Computer Vision · AI &amp; Vision Tech</span>
+                    <h3 class="WorkDoneName">CVALL</h3>
+                    <p class="WorkDoneDesc">Computer vision platform engineered for multiple real-world use cases with scalable inference pipelines.</p>
+                    <div class="WorkDoneTags">
+                        <span class="WorkDoneTag">GenAI</span>
+                        <span class="WorkDoneTag">Flask</span>
+                        <span class="WorkDoneTag">OpenCV</span>
+                        <span class="WorkDoneTag">MongoDB</span>
+                    </div>
+                </article>
+
+                <article class="WorkDoneCard WorkDoneCard--Genai" data-category="Genai">
+                    <div class="WorkDoneCardAccent" aria-hidden="true"></div>
+                    <div class="WorkDoneCardTop">
+                        <span class="WorkDoneCardIcon" aria-hidden="true">I</span>
+                    </div>
+                    <span class="WorkDoneDomain">AI · LLM · GenAI</span>
+                    <h3 class="WorkDoneName">Indus Portal</h3>
+                    <p class="WorkDoneDesc">Audio data collection portal paired with a custom-built LLM stack for domain-specific intelligence.</p>
+                    <div class="WorkDoneTags">
+                        <span class="WorkDoneTag">LLM</span>
+                        <span class="WorkDoneTag">Django</span>
+                        <span class="WorkDoneTag">MySQL</span>
+                        <span class="WorkDoneTag">Nginx</span>
+                    </div>
+                </article>
+
+                <article class="WorkDoneCard WorkDoneCard--Enterprise" data-category="Enterprise">
+                    <div class="WorkDoneCardAccent" aria-hidden="true"></div>
+                    <div class="WorkDoneCardTop">
+                        <span class="WorkDoneCardIcon" aria-hidden="true">U</span>
+                    </div>
+                    <span class="WorkDoneDomain">Metaverse Banking · FinTech &amp; VR</span>
+                    <h3 class="WorkDoneName">Universe</h3>
+                    <p class="WorkDoneDesc">Web-based metaverse banking experience with server architecture designed for immersive financial interactions.</p>
+                    <div class="WorkDoneTags">
+                        <span class="WorkDoneTag">Django</span>
+                        <span class="WorkDoneTag">MySQL</span>
+                        <span class="WorkDoneTag">Nginx</span>
+                        <span class="WorkDoneTag">Metaverse</span>
+                    </div>
+                </article>
+
+                <article class="WorkDoneCard WorkDoneCard--Enterprise" data-category="Enterprise">
+                    <div class="WorkDoneCardAccent" aria-hidden="true"></div>
+                    <div class="WorkDoneCardTop">
+                        <span class="WorkDoneCardIcon" aria-hidden="true">Ve</span>
+                    </div>
+                    <span class="WorkDoneDomain">Fleet Management · Logistics Tech</span>
+                    <h3 class="WorkDoneName">Vetturino</h3>
+                    <p class="WorkDoneDesc">Fleet and convoy management web application for real-time tracking, coordination, and operational oversight.</p>
+                    <div class="WorkDoneTags">
+                        <span class="WorkDoneTag">Django</span>
+                        <span class="WorkDoneTag">MySQL</span>
+                        <span class="WorkDoneTag">Ubuntu</span>
+                    </div>
+                </article>
+
+                <article class="WorkDoneCard WorkDoneCard--Enterprise" data-category="Enterprise">
+                    <div class="WorkDoneCardAccent" aria-hidden="true"></div>
+                    <div class="WorkDoneCardTop">
+                        <span class="WorkDoneCardIcon" aria-hidden="true">E</span>
+                    </div>
+                    <span class="WorkDoneDomain">Energy Tech · Monitoring Systems</span>
+                    <h3 class="WorkDoneName">Enetra</h3>
+                    <p class="WorkDoneDesc">Energy monitoring web application for tracking consumption, analytics, and operational efficiency.</p>
+                    <div class="WorkDoneTags">
+                        <span class="WorkDoneTag">Django</span>
+                        <span class="WorkDoneTag">MySQL</span>
+                        <span class="WorkDoneTag">Nginx</span>
+                    </div>
+                </article>
+
+                <article class="WorkDoneCard WorkDoneCard--Iot" data-category="Iot">
+                    <div class="WorkDoneCardAccent" aria-hidden="true"></div>
+                    <div class="WorkDoneCardTop">
+                        <span class="WorkDoneCardIcon" aria-hidden="true">F</span>
+                    </div>
+                    <span class="WorkDoneDomain">Smart Parking · IoT Ecosystem</span>
+                    <h3 class="WorkDoneName">FlashThru</h3>
+                    <p class="WorkDoneDesc">Smart parking ecosystem connecting sensors, backend services, and dashboards for end-to-end parking management.</p>
+                    <div class="WorkDoneTags">
+                        <span class="WorkDoneTag">Flask</span>
+                        <span class="WorkDoneTag">IoT</span>
+                        <span class="WorkDoneTag">MySQL</span>
+                        <span class="WorkDoneTag">Ubuntu</span>
+                    </div>
+                </article>
+            </div>
+        </div>
+    </section> -->
+
+    <section class="ContactSection" id="Contact">
+        <div class="ContactCard">
+            <div class="ContactCardGrid" aria-hidden="true"></div>
+            <div class="ContactCardGlow" aria-hidden="true"></div>
+
+            <div class="ContactCardInner">
+                <div class="ContactStatusPill">
+                    <span class="StatusDot"></span>
+                    <span>Available for work</span>
+                </div>
+
+                <h2 class="ContactTitle">Let's build something intelligent together.</h2>
+                <p class="ContactSubtitle">Have a project in mind, or just want to talk AI, vision and engineering? My inbox is open.</p>
+
+                <div class="ContactActions">
+                    <a href="mailto:prachidabi96@gmail.com" class="ContactEmailButton">
+                        <span>prachidabi96@gmail.com</span>
+                        <span class="ContactEmailArrow" aria-hidden="true">&#8594;</span>
+                    </a>
+                    <a href="https://www.linkedin.com/in/prachi-dabi-956677198/" class="ContactLinkedInButton" target="_blank" rel="noopener noreferrer">
+                        LinkedIn
+                        <span class="ContactLinkIcon" aria-hidden="true">&#8599;</span>
+                    </a>
+                </div>
+
+                <form class="ContactForm" id="ContactForm" novalidate>
+                    <div class="ContactFormRow">
+                        <label class="ContactField">
+                            <span class="ContactFieldLabel">Name</span>
+                            <input type="text" name="Name" class="ContactInput" placeholder="Your name" required autocomplete="name">
+                        </label>
+                        <label class="ContactField">
+                            <span class="ContactFieldLabel">Email</span>
+                            <input type="email" name="Email" class="ContactInput" placeholder="you@email.com" required autocomplete="email">
+                        </label>
+                    </div>
+                    <label class="ContactField">
+                        <span class="ContactFieldLabel">Message</span>
+                        <textarea name="Message" class="ContactInput ContactTextarea" placeholder="Tell me about your project or idea..." rows="4" required></textarea>
+                    </label>
+                    <input type="text" name="_honey" class="ContactHoney" tabindex="-1" autocomplete="off" aria-hidden="true">
+                    <button type="submit" class="ContactSubmitButton">
+                        <span class="ContactSubmitText">Send Message</span>
+                        <span class="ContactSubmitLoader" aria-hidden="true"></span>
+                    </button>
+                    <p class="ContactFormStatus" id="ContactFormStatus" role="status" aria-live="polite"></p>
+                </form>
+            </div>
+        </div>
+    </section>
+
     <div class="DeveloperBadge" aria-hidden="true">
         <svg viewBox="0 0 110 110">
             <circle class="DeveloperBadgeBg" cx="55" cy="55" r="52"/>
@@ -225,6 +705,13 @@
         </svg>
     </div>
 
+    <script src="cursor.js"></script>
     <script src="orbit.js"></script>
+    <script src="journey.js"></script>
+    <script src="media-carousel.js"></script>
+    <script src="awards.js"></script>
+    <script src="testimonials.js"></script>
+    <script src="work-done.js"></script>
+    <script src="contact.js"></script>
 </body>
 </html>
